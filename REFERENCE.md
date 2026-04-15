@@ -495,3 +495,213 @@
 | Wongo Customer Appreciation Badge | Does nothing. |
 | Wongo's Mystery Ticket | Receive 3 random Relics after 5 combats. |
 | Circlet | It's a circlet. A curious relic which appears when there's a problem within the Spire or there are no more relics to discover. |
+
+---
+
+## 三、怪物（Enemies）
+
+> 数据来源：slaythespire2.gg/enemies
+>
+> 数据版本：Beta v0.102，最后更新 2026.4.3
+>
+> HP 格式：普通值（高进阶值）。跨场景怪物在对应场景下各列出一次，以 `*` 标注。
+>
+> 类型：Boss / Elite / Normal / Weak / Event
+
+### 3.1 Glory
+
+#### Boss
+
+| 名称 | 原名 | HP | 固有能力 | 招式 |
+|------|------|----|----------|------|
+| 门之制造者 | Doormaker | 489-489(512-512) | — | Dramatic Open, Hunger, Scrutiny, Grasp |
+| 猫头鹰判官 | Owl Magistrate | 234-234(243-243) | — | Magistrate Scrutiny, Peck Assault, Judicial Flight, Verdict |
+| 女王 | Queen | 400-400(419-419) | — | Puppet Strings, You're Mine, Burn Bright for Me, Off with Your Head, Execution, Enrage |
+| 试验体 #C{Count} | Test Subject #C{Count} | — | Enrage×2, Adaptable×1 | Respawn, Bite, Skull Bash, Multi-Claw, Lacerate, Big Pounce+1 |
+
+#### Elite
+
+| 名称 | 原名 | HP | 固有能力 | 招式 |
+|------|------|----|----------|------|
+| 连枷骑士 | Flail Knight | 101-101(108-108) | — | War Chant, Flail, Ram |
+| 机甲骑士 | Mecha Knight | 300-300(320-320) | Artifact×3 | Charge, Flamethrower, Windup, Heavy Cleave |
+| 灵魂枢纽 | Soul Nexus | 234-234(254-254) | — | Soul Burn, Maelstrom, Drain Life |
+| 幽灵骑士 | Spectral Knight | 93-93(97-97) | — | Hex, Soul Slash, Soul Flame |
+
+#### Normal
+
+| 名称 | 原名 | HP | 固有能力 | 招式 |
+|------|------|----|----------|------|
+| 斧头机器人 | Axebot | 40-44(42-46) | Stock×2 | Boot Up, The One-Two, Sharpen, Hammer Uppercut |
+| 立方构造体* | Cubex Construct | 65-65(70-70) | Artifact×1 | Charge Up, Repeater, Repeater Move 2, Expel Blast, Submerge |
+| 制造者 | Fabricator | 150-150(155-155) | — | Fabricate, Fabricating Strike, Disintegrate |
+| 青蛙骑士 | Frog Knight | 191-191(199-199) | Plating×15 | For the Queen, Strike Down Evil, Tongue Lash, Beetle Charge |
+| 球形头 | Globe Head | 148-148(158-158) | Galvanic×6 | Thunder Strike, Shocking Slap, Galvanic Burst |
+| 法术骑士 | Magi Knight | 82-82(89-89) | — | First Power Shield, Dampen, Prep, Magic Bomb, Ram |
+| 拳击构造体* | Punch Construct | 55-55(60-60) | Artifact×1 | READY, Strong Punch, Fast Punch |
+| 史莱姆狂战士 | Slimed Berserker | 266-266(276-276) | — | Vomit Ichor, Leeching Hug, Smother, Furious Pummeling |
+| 被遗忘者 | The Forgotten | 106-106(111-111) | Possess Speed×1 | Miasma, Dread |
+| 迷失者 | The Lost | 93-93(99-99) | Possess Strength×1 | Debilitating Smog, Eye Lasers |
+| 火炬头融合体 | Torch Head Amalgam | 199-199(211-211) | Minion×1 | Tackle, Tackle, Beam, Tackle, Tackle |
+
+#### Weak
+
+| 名称 | 原名 | HP | 固有能力 | 招式 |
+|------|------|----|----------|------|
+| 虔诚雕塑师 | Devoted Sculptor | 162-162(172-172) | — | Forbidden Incantation, Savage |
+| 活盾 | Living Shield | 55-55(65-65) | Rampart×25 | Shield Slam, Smash |
+| 咬噬卷轴 | Scroll of Biting | 31-38(32-39) | Paper Cuts×2 | Chomp, Chew, More Teeth |
+| 炮塔操作员 | Turret Operator | 41-41(51-51) | — | Unload Move 1, Unload Move 2, Reload |
+
+### 3.2 Hive
+
+#### Boss
+
+| 名称 | 原名 | HP | 固有能力 | 招式 |
+|------|------|----|----------|------|
+| 粉碎者 | Crusher | 209-209(219-219) | Back Attack×1, Crab Rage×1 | Thrash, Enlarging Strike, Bug Sting, Adapt, Guarded Strike |
+| 知识恶魔 | Knowledge Demon | 379-379(399-399) | — | Curse of Knowledge, Slap, Knowledge Overwhelming, Ponder |
+| 火箭 | Rocket | 199-199(209-209) | Back Attack×1, Crab Rage×1, Surrounded×1 | Targeting Reticle, Precision Beam, Charge Up, Laser, Recharge |
+| 贪噬者 | The Insatiable | 321-321(341-341) | — | Liquify Ground, Thrash Move 1, Thrash Move 2, Lunging Bite, Salivate |
+
+#### Elite
+
+| 名称 | 原名 | HP | 固有能力 | 招式 |
+|------|------|----|----------|------|
+| 千足虫 | Decimillipede | 40-46(46-52) | Reattach×25 | Writhe, Bulk, Constrict, Dead, Reattach |
+| 昆虫法师 | Entomancer | 145-145(155-155) | Personal Hive×2 | Pheromone Spit, Beeeees!, Spear! |
+| 寄生棱镜 | Infested Prism | 200-200(215-215) | Vital Spark×1 | Jab, Radiate, Whirlwind, Pulsate |
+
+#### Normal
+
+| 名称 | 原名 | HP | 固有能力 | 招式 |
+|------|------|----|----------|------|
+| 碗虫(丝) | Bowlbug (Silk) | 40-43(41-44) | — | Thrash, Toxic Spit |
+| 咬合草 | Chomper | 60-64(63-67) | Artifact×2 | Clamp, Screech |
+| 猎杀者 | Hunter Killer | 121-121(126-126) | — | Tenderizing Goop, Bite, Puncture |
+| 虱祖 | Louse Progenitor | 134-136(138-141) | Curl Up×14 | Web Cannon, Pounce, Curl and Grow |
+| 螨虫 | Myte | 61-67(64-69) | — | Toxic Cornucopia, Bite, Suck |
+| 产卵器 | Ovicopter | 124-130(126-132) | — | Lay Eggs, Smash, Tenderizer, Nutritional Paste |
+| 沉眠甲虫 | Slumbering Beetle | 86-86(89-89) | Plating×15, Slumber×3 | Snore, Roll Out |
+| 刺蟾 | Spiny Toad | 116-119(121-124) | — | Protruding Spines, Spike Explosion, Tongue Lash |
+| 暗影者 | The Obscura | 123-123(129-129) | — | Illusion, Piercing Gaze, Wail, Hardening Strike |
+| 硬蛋 | Tough Egg | 14-18(15-19) | — | HATCH, Nibble |
+
+#### Weak
+
+| 名称 | 原名 | HP | 固有能力 | 招式 |
+|------|------|----|----------|------|
+| 碗虫(卵) | Bowlbug (Egg) | 21-22(23-24) | — | Bite |
+| 碗虫(蜜) | Bowlbug (Nectar) | 35-38(36-39) | — | Thrash, Buff, Thrash |
+| 碗虫(石) | Bowlbug (Rock) | 45-48(46-49) | Imbalanced×1 | Headbutt, Dizzy |
+| 外骨骼 | Exoskeleton | 24-28(25-29) | Hard to Kill×9 | Skitter, Mandibles, Enrage |
+| 飞贼蛙 | Thieving Hopper | 79-79(84-84) | Escape Artist×5 | Thievery, Nab, Hat Trick, Flutter, Escape |
+| 穿洞虫 | Tunneler | 87-87(92-92) | — | Bite, Burrow, Below Move 1, Dizzy |
+
+### 3.3 Overgrowth
+
+#### Boss
+
+| 名称 | 原名 | HP | 固有能力 | 招式 |
+|------|------|----|----------|------|
+| 仪式巨兽 | Ceremonial Beast | 252-252(262-262) | — | Stamp, Plow, Stun, Beast Cry, Stomp, Crush |
+| 血亲追随者 | Kin Follower | 58-59(62-63) | Minion×1 | Quick Slash, Boomerang, Power Dance |
+| 血亲祭司 | Kin Priest | 190-190(199-199) | — | Orb of Frailty, Orb of Weakness, Soul Beam, Dark Ritual |
+| 幽影 | Vantom | 173-173(183-183) | Slippery×9 | Ink Blot, Inky Lance, Dismember, Prepare |
+
+#### Elite
+
+| 名称 | 原名 | HP | 固有能力 | 招式 |
+|------|------|----|----------|------|
+| 远古偶像 | Bygone Effigy | 127-127(132-132) | Slow×1 | Initial Sleep, Wake, Slashes |
+| 鸟龙 | Byrdonis | 91-94(99-99) | Territorial×1 | Peck, Swoop |
+| 蛙寄生物 | Phrog Parasite | 61-64(66-68) | Infested×4 | Infect, Lash |
+
+#### Normal
+
+| 名称 | 原名 | HP | 固有能力 | 招式 |
+|------|------|----|----------|------|
+| 刺客掠袭者 | Assassin Raider | 18-23(19-24) | — | Killshot |
+| 斧手掠袭者 | Axe Raider | 20-22(21-23) | — | Swing 1, Swing 2, Big Swing |
+| 残暴掠袭者 | Brute Raider | 30-33(31-34) | — | Beat, Roar |
+| 弩手掠袭者 | Crossbow Raider | 18-21(19-22) | — | Fire!, Reload |
+| 立方构造体* | Cubex Construct | 65-65(70-70) | Artifact×1 | Charge Up, Repeater, Repeater Move 2, Expel Blast, Submerge |
+| 长牙眼球 | Eye With Teeth | 6-6 | Illusion×1 | Distract |
+| 蝇伞菌 | Flyconid | 47-49(51-53) | — | Vulnerable Spores, Frail Spores, Smash |
+| 雾魔 | Fogmog | 74-74(78-78) | — | Illusion, Swipe, Swipe Random, Headbutt |
+| 墨滴 | Inklet | 11-17(12-18) | Slippery×1 | Jab, Whirlwind, Piercing Gaze |
+| 撕咬兽 | Mawler | 72-72(76-76) | — | Rip and Tear, Roar, Claw |
+| 缩小甲虫 | Shrinker Beetle | 38-40(40-42) | — | Shrinker, Chomp, Stomp |
+| 蛇行绞杀者 | Slithering Strangler | 53-55(54-56) | — | Constrict, Thwack, Lash |
+| 啮果虫 | Snapping Jaxfruit | 31-33(34-36) | — | Energy Orb |
+| 追踪掠袭者 | Tracker Raider | 21-25(22-26) | — | Track, Unleash the Hounds |
+| 藤蔓行者 | Vine Shambler | 61-61(64-64) | — | Grasping Vines, Swipe, Chomp |
+
+#### Weak
+
+| 名称 | 原名 | HP | 固有能力 | 招式 |
+|------|------|----|----------|------|
+| 绒毛蠕虫 | Fuzzy Wurm Crawler | 55-57(58-59) | — | First Acid Goop, Acid Goop, Inhale |
+| 叶史莱姆(中) | Leaf Slime (M) | 32-35(33-36) | — | Clump Shot, Sticky Shot |
+| 叶史莱姆(小) | Leaf Slime (S) | 11-15(12-16) | — | Butt, Goop |
+| 啮咬虫 | Nibbit | 42-46(44-48) | — | Butt, Slice, Hiss |
+| 枝条史莱姆(中) | Twig Slime (M) | 26-28(27-29) | — | Clump Shot, Sticky Shot |
+| 枝条史莱姆(小) | Twig Slime (S) | 7-11(8-12) | — | Butt |
+| 蠕动虫 | Wriggler | 17-21(18-22) | — | Nasty Bite, Wriggle, Spawned |
+
+### 3.4 Underdocks
+
+#### Boss
+
+| 名称 | 原名 | HP | 固有能力 | 招式 |
+|------|------|----|----------|------|
+| 拉加林女族长 | Lagavulin Matriarch | 222-222(233-233) | Plating×12, Asleep×3 | Sleep, Slash, Slash, Disembowel, Soul Siphon |
+| 灵魂鱼 | Soul Fysh | 211-211(221-221) | — | Beckon, De-Gas, Gaze, Fade, Scream |
+| 瀑布巨人 | Waterfall Giant | 240-240(250-250) | — | Pressurize, Stomp, Ram, Siphon, Pressure Gun, Pressure Up+2 |
+
+#### Elite
+
+| 名称 | 原名 | HP | 固有能力 | 招式 |
+|------|------|----|----------|------|
+| 幻影园丁 | Phantasmal Gardener | 26-31(27-32) | Skittish×6 | Bite, Lash, Flail, Enlarge |
+| 潜伏群落 | Skulking Colony | 74-74(79-79) | Hardened Shell×20 | Smash, Zoom, Inertia, Piercing Stabs |
+| 恐惧鳗 | Terror Eel | 140-140(150-150) | Shriek×70 | Crash, Thrashmove, Stun, Terror |
+
+#### Normal
+
+| 名称 | 原名 | HP | 固有能力 | 招式 |
+|------|------|----|----------|------|
+| 钙化邪教徒 | Calcified Cultist | 38-41(39-42) | — | Incantation, Dark Strike |
+| 尸蛞蝓 | Corpse Slug | 25-27(27-29) | Ravenous×4 | Whip Slap, Glomp, Goop |
+| 湿气邪教徒 | Damp Cultist | 51-53(52-54) | — | Incantation, Dark Strike |
+| 肥胖哥布林 | Fat Gremlin | 13-17(14-18) | — | Spawned, Flee |
+| 化石追踪者 | Fossil Stalker | 51-53(54-56) | Suck×3 | Tackle, Latch, Lash |
+| 毒气弹 | Gas Bomb | 7-7(8-8) | Minion×1 | Explode |
+| 哥布林雇佣兵 | Gremlin Merc | 47-49(51-53) | Surprise×1 | Gimme, Double Smash, Hehe |
+| 幽灵船 | Haunted Ship | 63-63(67-67) | — | Ramming Speed, Swipe, Stomp, Haunt |
+| 活雾 | Living Fog | 80-80(82-82) | — | Advanced Gas, Bloat, Super Gas Blast |
+| 拳击构造体* | Punch Construct | 55-55(60-60) | Artifact×1 | READY, Strong Punch, Fast Punch |
+| 排污蛤 | Sewer Clam | 56-56(58-58) | Plating×8 | Pressurize, Jet |
+| 双尾鼠 | Two-Tailed Rat | 17-21(18-22) | — | Scratch, Disease Bite, Screech, Call for Backup |
+
+#### Weak
+
+| 名称 | 原名 | HP | 固有能力 | 招式 |
+|------|------|----|----------|------|
+| 海朋克 | Seapunk | 44-46(47-49) | — | Sea Kick, Spinning Kick, Bubble Burp |
+| 污泥纺丝者 | Sludge Spinner | 37-39(41-42) | — | Oil Spray, Slam, Rage |
+| 潜行哥布林 | Sneaky Gremlin | 10-14(11-15) | — | Spawned, Tackle |
+| 蝌蚪 | Toadpole | 21-25(22-26) | — | Spike Spit, Whirl, Spiken |
+
+### 3.5 特殊/事件
+
+| 名称 | 原名 | HP | 固有能力 | 招式 |
+|------|------|----|----------|------|
+| 商人 | The Merchant | 165-165(175-175) | — | Swipe, Spew Coins, Throw Relic, Enrage |
+
+### 3.6 跨场景怪物说明
+
+| 原名 | 出现场景 |
+|------|----------|
+| Cubex Construct | Glory, Overgrowth |
+| Punch Construct | Glory, Underdocks |
