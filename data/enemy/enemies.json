@@ -1,0 +1,42 @@
+# enemies.json 格式说明
+#
+# 顶层：
+#   enemies      敌人数组，一个元素代表一种敌人
+#
+# 单个敌人：
+#   id           唯一标识
+#   name         显示名称
+#   scene        场景路径（预制体已挂载脚本，脚本自动从此文件读取数值初始化）
+#   hp           生命值
+#   speed        移动速度
+#   damage       碰撞伤害
+#   xp_value     击杀经验值
+#   type         类型：normal / elite / boss
+#   abilities    能力数组（后续扩展）
+
+{
+  "enemies": [
+    {
+      "id": "slime_leaf",
+      "name": "树叶史莱姆",
+      "scene": "res://scene/enemy/slime_leaf.tscn",
+      "hp": 10,
+      "speed": 0,
+      "damage": 5,
+      "xp_value": 1,
+      "type": "normal",
+      "abilities": []
+    },
+    {
+      "id": "slime_twig",
+      "name": "树枝史莱姆",
+      "scene": "res://scene/enemy/slime_twig.tscn",
+      "hp": 10,
+      "speed": 80,
+      "damage": 5,
+      "xp_value": 1,
+      "type": "normal",
+      "abilities": []
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://cietg4fx70ho7"]
+
+[ext_resource type="PackedScene" uid="uid://d1c44phoahxvt" path="res://scene/player.tscn" id="1"]
+[ext_resource type="Texture2D" uid="uid://d2s488xtjgv72" path="res://icon.svg" id="2"]
+[ext_resource type="Script" path="res://script/core/battle_manager.gd" id="3"]
+[ext_resource type="Script" path="res://script/core/main.gd" id="5"]
+
+[node name="Main" type="Node2D" unique_id=1749692696]
+script = ExtResource("5")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1527028463]
+zoom = Vector2(2, 2)
+
+[node name="Player" parent="." unique_id=1051167302 instance=ExtResource("1")]
+metadata/_edit_group_ = true
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Icon" type="Sprite2D" parent="." unique_id=1208816784]
+position = Vector2(120, 4)
+texture = ExtResource("2")
+
+[node name="BattleManager" type="Node" parent="."]
+script = ExtResource("3")
