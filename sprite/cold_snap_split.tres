@@ -1,0 +1,32 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://cfwl0pq1oyas5"]
+
+[ext_resource type="Texture2D" uid="uid://shckwiq6g3wm" path="res://sprite/cold_snap_split.png" id="1_yada7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f2r0m"]
+atlas = ExtResource("1_yada7")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_twi3k"]
+atlas = ExtResource("1_yada7")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_07v7v"]
+atlas = ExtResource("1_yada7")
+region = Rect2(64, 0, 32, 32)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f2r0m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_twi3k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_07v7v")
+}],
+"loop": true,
+"name": &"split",
+"speed": 5.0
+}]

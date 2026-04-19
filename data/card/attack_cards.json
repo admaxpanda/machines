@@ -1,0 +1,79 @@
+# attack_cards.json 格式说明
+#
+# 顶层：
+#   cards    攻击卡数组
+#
+# 单张攻击卡：
+#   id        唯一标识
+#   name      显示名称
+#   cost      能量消耗
+#   chain     效果链（嵌套字典，每个节点可含回调槽）
+#   exhaust   打出后是否消耗（true/false）
+#
+# 触发器（产生事件，含回调槽）：
+#   { "type": "aoe_detect", "radius": 30, "animation": "...", "lifetime": 0.2, "on_detect": [...] }
+#   { "type": "spawn_projectile", "speed": 300, "max_range": 200, "animation": "...", "on_hit": [...] }
+#
+# 原子效果（叶节点，做一件事）：
+#   { "type": "deal_damage", "value": 6 }
+#   { "type": "apply_debuff", "name": "weak", "duration": 1 }
+#   { "type": "knockback" }
+#   { "type": "draw_cards", "value": 1 }
+#   { "type": "gain_energy", "value": 1 }
+#   { "type": "channel_orb", "orb_id": "frost" }
+
+{
+  "cards": [
+    {
+      "id": "strike",
+      "name": "打击",
+      "cost": 1,
+      "chain": {
+        "type": "aoe_detect",
+        "shape": "circle",
+        "radius": 30,
+        "origin": "player",
+        "target": "enemy",
+        "offset": 20,
+        "animation": "res://sprite/strike.tres",
+        "lifetime": 0.2,
+        "on_detect": [
+          { "type": "deal_damage", "value": 6 },
+          { "type": "knockback" }
+        ]
+      },
+      "exhaust": false
+    },
+    {
+      "id": "cold_snap",
+      "name": "寒流",
+      "cost": 1,
+      "chain": {
+        "type": "spawn_projectile",
+        "origin": "player",
+        "target": "enemy",
+        "offset": 10,
+        "speed": 300,
+        "max_range": 400,
+        "radius": 5,
+        "animation": "res://sprite/cold_snap.tres",
+        "on_hit": [
+          {
+            "type": "aoe_detect",
+            "shape": "circle",
+            "radius": 40,
+            "origin": "parent",
+            "target": "enemy",
+            "animation": "res://sprite/cold_snap_split.tres",
+            "lifetime": 0.3,
+            "on_detect": [
+              { "type": "deal_damage", "value": 4 },
+              { "type": "channel_orb", "orb_id": "frost" }
+            ]
+          }
+        ]
+      },
+      "exhaust": false
+    }
+  ]
+}

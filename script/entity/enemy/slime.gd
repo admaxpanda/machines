@@ -17,6 +17,7 @@ func init(data: Dictionary) -> void:
 	xp_value = int(data.get("xp_value", 1))
 
 func _ready() -> void:
+	add_to_group(&"enemy")
 	var players := get_tree().get_nodes_in_group(&"player")
 	if players.size() > 0:
 		_player = players[0] as CharacterBody2D

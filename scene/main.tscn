@@ -2,8 +2,9 @@
 
 [ext_resource type="PackedScene" uid="uid://d1c44phoahxvt" path="res://scene/player.tscn" id="1"]
 [ext_resource type="Texture2D" uid="uid://d2s488xtjgv72" path="res://icon.svg" id="2"]
-[ext_resource type="Script" path="res://script/core/battle_manager.gd" id="3"]
-[ext_resource type="Script" path="res://script/core/main.gd" id="5"]
+[ext_resource type="Script" uid="uid://dstvg70i6nk4p" path="res://script/core/battle_manager.gd" id="3"]
+[ext_resource type="Script" uid="uid://dce21cjnm01gj" path="res://script/core/main.gd" id="5"]
+[ext_resource type="Script" uid="uid://w31183ekimgx" path="res://script/test/test.gd" id="6"]
 
 [node name="Main" type="Node2D" unique_id=1749692696]
 script = ExtResource("5")
@@ -14,11 +15,14 @@ zoom = Vector2(2, 2)
 [node name="Player" parent="." unique_id=1051167302 instance=ExtResource("1")]
 metadata/_edit_group_ = true
 
-[node name="Enemies" type="Node2D" parent="."]
+[node name="Enemies" type="Node2D" parent="." unique_id=1945427893]
 
 [node name="Icon" type="Sprite2D" parent="." unique_id=1208816784]
 position = Vector2(120, 4)
 texture = ExtResource("2")
 
-[node name="BattleManager" type="Node" parent="."]
+[node name="BattleManager" type="Node" parent="." unique_id=1837276765]
 script = ExtResource("3")
+
+[node name="Test" type="Node2D" parent="." unique_id=114152428]
+script = ExtResource("6")
