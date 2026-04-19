@@ -28,6 +28,7 @@
       "id": "strike",
       "name": "打击",
       "cost": 1,
+      "cover": "res://sprite/strike_card.png",
       "chain": {
         "type": "aoe_detect",
         "shape": "circle",
@@ -48,6 +49,7 @@
       "id": "cold_snap",
       "name": "寒流",
       "cost": 1,
+      "cover": "res://sprite/cold_snap_card.png",
       "chain": {
         "type": "spawn_projectile",
         "origin": "player",

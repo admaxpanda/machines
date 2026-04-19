@@ -1,0 +1,16 @@
+{
+  "attack_deck": [
+    { "card_id": "strike" },
+    { "card_id": "strike" },
+    { "card_id": "strike" },
+    { "card_id": "strike" },
+    { "card_id": "strike" },
+    { "card_id": "cold_snap" },
+    { "card_id": "cold_snap" },
+    { "card_id": "cold_snap" },
+    { "card_id": "cold_snap" },
+    { "card_id": "cold_snap" }
+  ],
+  "skill_deck": [],
+  "ability_deck": []
+}

@@ -5,15 +5,21 @@
 [ext_resource type="Script" uid="uid://dstvg70i6nk4p" path="res://script/core/battle_manager.gd" id="3"]
 [ext_resource type="Script" uid="uid://dce21cjnm01gj" path="res://script/core/main.gd" id="5"]
 [ext_resource type="Script" uid="uid://w31183ekimgx" path="res://script/test/test.gd" id="6"]
+[ext_resource type="Script" uid="uid://d7dnbm1r8uphe" path="res://script/core/card_engine.gd" id="7"]
+[ext_resource type="PackedScene" path="res://scene/ui/hand_ui.tscn" id="9"]
+[ext_resource type="Script" path="res://script/core/camera_follow.gd" id="10"]
 
 [node name="Main" type="Node2D" unique_id=1749692696]
 script = ExtResource("5")
 
+[node name="Player" parent="." unique_id=1051161302 instance=ExtResource("1")]
+metadata/_edit_group_ = true
+
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1527028463]
 zoom = Vector2(2, 2)
-
-[node name="Player" parent="." unique_id=1051167302 instance=ExtResource("1")]
-metadata/_edit_group_ = true
+script = ExtResource("10")
+follow_speed = 6.0
+target_path = NodePath("../Player")
 
 [node name="Enemies" type="Node2D" parent="." unique_id=1945427893]
 
@@ -23,6 +29,12 @@ texture = ExtResource("2")
 
 [node name="BattleManager" type="Node" parent="." unique_id=1837276765]
 script = ExtResource("3")
+
+[node name="CardEngine" type="Node" parent="."]
+script = ExtResource("7")
+
+[node name="HandUI" parent="." instance=ExtResource("9")]
+card_engine_path = NodePath("../CardEngine")
 
 [node name="Test" type="Node2D" parent="." unique_id=114152428]
 script = ExtResource("6")
