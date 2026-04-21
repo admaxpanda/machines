@@ -13,12 +13,22 @@ func _ready() -> void:
 		elif card.id == &"cold_snap":
 			_cold_snap = card
 
+var _orb_ids: Array[StringName] = [&"lightning", &"frost", &"dark", &"glass", &"plasma"]
+
 func _input(event: InputEvent) -> void:
-	var card: AttackCardData = null
 	if event.is_action_pressed("left_click"):
-		card = _cold_snap
-	elif event.is_action_pressed("right_click"):
-		card = _strike
+		var managers := get_tree().get_nodes_in_group(&"orb_manager")
+		if managers.size() > 0:
+			var random_id: StringName = _orb_ids[randi() % _orb_ids.size()]
+			managers[0].channel_orb(random_id)
+		return
+	var card: AttackCardData = null
+	if event.is_action_pressed("right_click"):
+		var managers := get_tree().get_nodes_in_group(&"orb_manager")
+		if managers.size() > 0:
+			managers[0].max_slots += 1
+			print("[Test] 球位 +1，当前 %d" % managers[0].max_slots)
+		return
 	if not card:
 		return
 	var player: Node2D = get_tree().get_first_node_in_group(&"player")

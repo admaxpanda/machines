@@ -1,0 +1,128 @@
+{
+  "orbs": [
+    {
+      "id": "lightning",
+      "name": "闪电",
+      "passive_desc": "对随机敌人造成 3+聚焦 伤害（小范围）",
+      "evoke_desc": "对随机敌人造成 8+聚焦 伤害（大范围）",
+      "passive_focus_bonus": 1,
+      "evoke_focus_bonus": 1,
+      "passive_chain": {
+        "type": "aoe_detect",
+        "shape": "circle",
+        "radius": 15,
+        "origin": "random_enemy",
+        "target": "player",
+        "offset": 0,
+        "lifetime": 0.2,
+        "on_detect": [{"type": "deal_damage", "value": 3}]
+      },
+      "evoke_chain": {
+        "type": "aoe_detect",
+        "shape": "circle",
+        "radius": 30,
+        "origin": "random_enemy",
+        "target": "player",
+        "offset": 0,
+        "lifetime": 0.2,
+        "on_detect": [{"type": "deal_damage", "value": 8}]
+      }
+    },
+    {
+      "id": "frost",
+      "name": "冰霜",
+      "passive_desc": "获得 2+聚焦 护盾（持续1回合）",
+      "evoke_desc": "获得 (2+聚焦)×2 护盾（持续5回合）",
+      "passive_focus_bonus": 1,
+      "evoke_focus_bonus": 2,
+      "passive_shield": {"amount": 2, "duration": 1},
+      "evoke_shield": {"amount": 4, "duration": 5}
+    },
+    {
+      "id": "dark",
+      "name": "黑暗",
+      "passive_desc": "累积伤害（每回合+6+聚焦）",
+      "evoke_desc": "对最低血量敌人释放累积伤害（中范围）",
+      "passive_accumulate": {"base": 6},
+      "passive_focus_bonus": 1,
+      "evoke_chain": {
+        "type": "aoe_detect",
+        "shape": "circle",
+        "radius": 20,
+        "origin": "lowest_hp_enemy",
+        "target": "player",
+        "offset": 0,
+        "lifetime": 0.2,
+        "on_detect": [{"type": "deal_damage", "value": 0}]
+      }
+    },
+    {
+      "id": "glass",
+      "name": "玻璃",
+      "passive_desc": "随机方向发射光束，造成玻璃伤害+聚焦伤害，每次使用玻璃伤害-1",
+      "evoke_desc": "向四个方向发射光束，各造成(玻璃伤害+聚焦)×2伤害",
+      "passive_focus_bonus": 1,
+      "evoke_focus_bonus": 1,
+      "passive_glass_damage": true,
+      "evoke_damage_multiplier": 2,
+      "passive_chain": {
+        "type": "beam_detect",
+        "origin": "parent",
+        "target": {"random": [1,2,3,4]},
+        "length": 120,
+        "width": 8,
+        "tail_width_coeff": 1.0,
+        "lifetime": 0.3,
+        "min_opacity": 0.0,
+        "on_detect": [{"type": "deal_damage", "value": 0}]
+      },
+      "evoke_chain": {
+        "type": "multi_release",
+        "count": 4,
+        "interval": 0.0,
+        "chains": [
+          {
+            "type": "beam_detect",
+            "origin": "parent",
+            "target": {"random": [1]},
+            "length": 120, "width": 8, "tail_width_coeff": 1.0,
+            "lifetime": 0.3, "min_opacity": 0.0,
+            "on_detect": [{"type": "deal_damage", "value": 0}]
+          },
+          {
+            "type": "beam_detect",
+            "origin": "parent",
+            "target": {"random": [2]},
+            "length": 120, "width": 8, "tail_width_coeff": 1.0,
+            "lifetime": 0.3, "min_opacity": 0.0,
+            "on_detect": [{"type": "deal_damage", "value": 0}]
+          },
+          {
+            "type": "beam_detect",
+            "origin": "parent",
+            "target": {"random": [3]},
+            "length": 120, "width": 8, "tail_width_coeff": 1.0,
+            "lifetime": 0.3, "min_opacity": 0.0,
+            "on_detect": [{"type": "deal_damage", "value": 0}]
+          },
+          {
+            "type": "beam_detect",
+            "origin": "parent",
+            "target": {"random": [4]},
+            "length": 120, "width": 8, "tail_width_coeff": 1.0,
+            "lifetime": 0.3, "min_opacity": 0.0,
+            "on_detect": [{"type": "deal_damage", "value": 0}]
+          }
+        ]
+      }
+    },
+    {
+      "id": "plasma",
+      "name": "等离子",
+      "passive_desc": "下回合获得 +1 攻击能量",
+      "evoke_desc": "获得 +1 技能能量（技能系统未实装）",
+      "passive_energy": 1,
+      "evoke_energy": 1
+    }
+  ]
+}

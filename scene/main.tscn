@@ -5,9 +5,12 @@
 [ext_resource type="Script" uid="uid://dstvg70i6nk4p" path="res://script/core/battle_manager.gd" id="3"]
 [ext_resource type="Script" uid="uid://dce21cjnm01gj" path="res://script/core/main.gd" id="5"]
 [ext_resource type="Script" uid="uid://w31183ekimgx" path="res://script/test/test.gd" id="6"]
-[ext_resource type="Script" uid="uid://d7dnbm1r8uphe" path="res://script/core/card_engine.gd" id="7"]
+[ext_resource type="Script" uid="uid://iwpcb5cd3fn3" path="res://script/core/card_engine.gd" id="7"]
 [ext_resource type="PackedScene" path="res://scene/ui/hand_ui.tscn" id="9"]
-[ext_resource type="Script" path="res://script/core/camera_follow.gd" id="10"]
+[ext_resource type="Script" uid="uid://cx8qt84fllqux" path="res://script/core/camera_follow.gd" id="10"]
+[ext_resource type="PackedScene" path="res://scene/ui/hud.tscn" id="11"]
+[ext_resource type="Script" uid="uid://mplf3codgtmy" path="res://script/core/reward_manager.gd" id="12"]
+[ext_resource type="PackedScene" path="res://scene/ui/reward_ui.tscn" id="13"]
 
 [node name="Main" type="Node2D" unique_id=1749692696]
 script = ExtResource("5")
@@ -18,7 +21,6 @@ metadata/_edit_group_ = true
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1527028463]
 zoom = Vector2(2, 2)
 script = ExtResource("10")
-follow_speed = 6.0
 target_path = NodePath("../Player")
 
 [node name="Enemies" type="Node2D" parent="." unique_id=1945427893]
@@ -30,11 +32,20 @@ texture = ExtResource("2")
 [node name="BattleManager" type="Node" parent="." unique_id=1837276765]
 script = ExtResource("3")
 
-[node name="CardEngine" type="Node" parent="."]
+[node name="CardEngine" type="Node" parent="." unique_id=732291402]
 script = ExtResource("7")
 
-[node name="HandUI" parent="." instance=ExtResource("9")]
+[node name="HandUI" parent="." unique_id=1156356695 instance=ExtResource("9")]
 card_engine_path = NodePath("../CardEngine")
+
+[node name="RewardManager" type="Node" parent="." unique_id=1565101948]
+script = ExtResource("12")
+
+[node name="RewardUI" parent="." unique_id=931864545 instance=ExtResource("13")]
+
+[node name="HUD" parent="." unique_id=1257644892 instance=ExtResource("11")]
+player_path = NodePath("../Player")
+battle_manager_path = NodePath("../BattleManager")
 
 [node name="Test" type="Node2D" parent="." unique_id=114152428]
 script = ExtResource("6")

@@ -21,7 +21,7 @@
       "name": "树叶史莱姆",
       "scene": "res://scene/enemy/slime_leaf.tscn",
       "hp": 10,
-      "speed": 0,
+      "speed": 80,
       "damage": 5,
       "xp_value": 1,
       "type": "normal",

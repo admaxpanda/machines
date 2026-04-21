@@ -13,6 +13,15 @@
 # 触发器（产生事件，含回调槽）：
 #   { "type": "aoe_detect", "radius": 30, "animation": "...", "lifetime": 0.2, "on_detect": [...] }
 #   { "type": "spawn_projectile", "speed": 300, "max_range": 200, "animation": "...", "on_hit": [...] }
+#   { "type": "beam_detect", "origin": "player", "target": "enemy", "length": 100, "width": 10,
+#     "tail_width_coeff": 1.0, "lifetime": 0.3, "min_opacity": 0.0, "on_detect": [...] }
+#   { "type": "multi_release", "count": 4, "interval": 0.05,
+#     "chains": [ { ... }, { ... }, ... ] }
+#
+# origin/target 可选值：
+#   "player" / "enemy" / "parent"
+#   "random_enemy" / "lowest_hp_enemy"
+#   {"random": [1,2,3,4]}  指定象限的随机方向（1=右下, 2=右上, 3=左上, 4=左下）
 #
 # 原子效果（叶节点，做一件事）：
 #   { "type": "deal_damage", "value": 6 }

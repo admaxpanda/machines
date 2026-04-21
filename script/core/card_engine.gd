@@ -14,11 +14,18 @@ var source: Node2D                  ## 玩家引用（攻击出发点）
 
 var energy: int = 0                ## 当前能量
 var energy_per_turn: int = 3       ## 每回合获得能量
+
+func _ready() -> void:
+	add_to_group(&"card_engine")
 var hand_limit: int = 10           ## 手牌上限
 var draw_per_turn: int = 5         ## 每回合抽牌数
 var turn_duration: float = 1.0     ## 回合总时长（秒）
 var play_interval: float = 0.1     ## 打牌间隔（秒）
 var _running: bool = false         ## 回合循环是否运行中
+
+## 添加卡牌到弃牌堆（奖励系统用）
+func add_card(card: AttackCardData) -> void:
+	discard_pile.append(card)
 
 ## 初始化：传入卡组，洗牌放入抽牌堆
 func initialize(deck: Array) -> void:
@@ -93,10 +100,20 @@ func run_turns() -> void:
 				break
 		end_turn()
 		hand_changed.emit()
-		var remaining := turn_duration - elapsed
-		if remaining > 0.0:
-			await get_tree().create_timer(remaining).timeout
+		await _trigger_orb_passives()
+		_tick_buffs()
 
 ## 停止回合循环
 func stop_turns() -> void:
 	_running = false
+
+## 触发所有充能球被动（异步，等待全部完成）
+func _trigger_orb_passives() -> void:
+	var managers := get_tree().get_nodes_in_group(&"orb_manager")
+	if managers.size() > 0:
+		await managers[0].trigger_all_passives()
+
+## 回合结束 tick 所有 buff
+func _tick_buffs() -> void:
+	for bc in get_tree().get_nodes_in_group(&"buff_container"):
+		bc.tick_turn()
