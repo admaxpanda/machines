@@ -1,0 +1,32 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://bhpp4e6e8svcx"]
+
+[ext_resource type="Texture2D" uid="uid://dxhx0x7ncmkim" path="res://sprite/hailstorm_hit.png" id="1_pn6gy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e1jhd"]
+atlas = ExtResource("1_pn6gy")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_03dlg"]
+atlas = ExtResource("1_pn6gy")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yh2rr"]
+atlas = ExtResource("1_pn6gy")
+region = Rect2(64, 0, 32, 32)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e1jhd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_03dlg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yh2rr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]

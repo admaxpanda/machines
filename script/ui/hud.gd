@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-## HUD 左上角：关卡信息 + 血条 + 经验条
+## HUD：左上角关卡信息 + 血条 + 经验条 + 底部技能栏
 
 @export var player_path: NodePath
 @export var battle_manager_path: NodePath
@@ -13,6 +13,12 @@ const BG_COLOR := Color(0.25, 0.25, 0.25)
 const HP_COLOR := Color(0.85, 0.15, 0.15)
 const XP_COLOR := Color(0.2, 0.85, 0.3)
 
+const CARD_W := 120.0
+const CARD_H := 90.0
+const CARD_GAP := 4.0
+const COST_FONT_SIZE := 10
+const KEY_FONT_SIZE := 8
+
 var _player: CharacterBody2D
 var _battle_manager: Node
 var _hp_fg: ColorRect
@@ -20,6 +26,21 @@ var _xp_fg: ColorRect
 var _hp_label: Label
 var _level_label: Label
 var _phase_label: Label
+var _skill_energy_label: Label
+var _skill_progress_fg: ColorRect
+
+var _skill_card_engine: Node
+var _skill_slots: Array = []      ## Array[Control]
+var _skill_bar: HBoxContainer
+
+func set_skill_engine(value: Node) -> void:
+	_skill_card_engine = value
+	if _skill_card_engine:
+		_skill_card_engine.hand_changed.connect(_on_skill_hand_changed)
+		_skill_card_engine.energy_changed.connect(_on_skill_energy_changed)
+		if _skill_card_engine.has_signal("turn_progress_changed"):
+			_skill_card_engine.turn_progress_changed.connect(_on_skill_turn_progress)
+		_refresh_skill_bar()
 
 func _ready() -> void:
 	_player = get_node_or_null(player_path) as CharacterBody2D
@@ -34,7 +55,18 @@ func _ready() -> void:
 	_build_ui()
 	_refresh_all()
 
+func _process(_delta: float) -> void:
+	if not _skill_card_engine:
+		return
+	for i in 5:
+		if Input.is_action_just_pressed("skill_%d" % (i + 1)):
+			_skill_card_engine.play_at(i)
+
 func _build_ui() -> void:
+	_build_top_left()
+	_build_skill_bar()
+
+func _build_top_left() -> void:
 	var root := MarginContainer.new()
 	root.set_anchors_preset(Control.PRESET_TOP_LEFT)
 	root.offset_left = MARGIN
@@ -45,12 +77,10 @@ func _build_ui() -> void:
 	vbox.add_theme_constant_override("separation", 6)
 	root.add_child(vbox)
 
-	# — 关卡信息 —
 	_phase_label = _make_label()
 	_phase_label.text = "场景- 关卡- —"
 	vbox.add_child(_phase_label)
 
-	# — HP —
 	_hp_label = _make_label()
 	vbox.add_child(_hp_label)
 
@@ -62,7 +92,6 @@ func _build_ui() -> void:
 	_hp_fg = _make_fg(HP_COLOR, HP_BAR_H)
 	hp_bar.add_child(_hp_fg)
 
-	# — XP —
 	_level_label = _make_label()
 	vbox.add_child(_level_label)
 
@@ -73,6 +102,125 @@ func _build_ui() -> void:
 	xp_bar.add_child(xp_bg)
 	_xp_fg = _make_fg(XP_COLOR, XP_BAR_H)
 	xp_bar.add_child(_xp_fg)
+
+func _build_skill_bar() -> void:
+	_skill_bar = HBoxContainer.new()
+	_skill_bar.anchor_left = 0.5
+	_skill_bar.anchor_right = 0.5
+	_skill_bar.anchor_top = 1.0
+	_skill_bar.anchor_bottom = 1.0
+	var bw := 5.0 * CARD_W + 4.0 * CARD_GAP
+	_skill_bar.offset_left = -bw / 2.0
+	_skill_bar.offset_right = bw / 2.0
+	_skill_bar.offset_top = -CARD_H
+	_skill_bar.offset_bottom = 0.0
+	_skill_bar.add_theme_constant_override("separation", int(CARD_GAP))
+	_skill_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_skill_bar)
+
+	_skill_energy_label = Label.new()
+	_skill_energy_label.add_theme_font_size_override("font_size", 12)
+	_skill_energy_label.text = "E:0"
+	_skill_energy_label.visible = false
+	_skill_energy_label.anchor_left = 0.5
+	_skill_energy_label.anchor_right = 0.5
+	_skill_energy_label.anchor_top = 1.0
+	_skill_energy_label.anchor_bottom = 1.0
+	_skill_energy_label.offset_left = -bw / 2.0
+	_skill_energy_label.offset_right = bw / 2.0
+	_skill_energy_label.offset_top = -CARD_H - 26
+	_skill_energy_label.offset_bottom = -CARD_H - 8
+	add_child(_skill_energy_label)
+
+	# 技能卡回合进度条
+	var prog_h := 4.0
+	var prog_container := Control.new()
+	prog_container.anchor_left = 0.5
+	prog_container.anchor_right = 0.5
+	prog_container.anchor_top = 1.0
+	prog_container.anchor_bottom = 1.0
+	prog_container.offset_left = -bw / 2.0
+	prog_container.offset_right = bw / 2.0
+	prog_container.offset_top = -CARD_H - prog_h
+	prog_container.offset_bottom = -CARD_H
+	prog_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(prog_container)
+
+	var prog_bg := ColorRect.new()
+	prog_bg.color = BG_COLOR
+	prog_bg.size = Vector2(bw, prog_h)
+	prog_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	prog_container.add_child(prog_bg)
+
+	_skill_progress_fg = ColorRect.new()
+	_skill_progress_fg.color = Color(0.3, 0.6, 0.9)
+	_skill_progress_fg.size = Vector2(0.0, prog_h)
+	_skill_progress_fg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	prog_container.add_child(_skill_progress_fg)
+
+	for i in 5:
+		var slot := _make_skill_slot(i)
+		_skill_slots.append(slot)
+		_skill_bar.add_child(slot)
+
+func _make_skill_slot(index: int) -> TextureRect:
+	var tex := TextureRect.new()
+	tex.custom_minimum_size = Vector2(CARD_W, CARD_H)
+	tex.size = Vector2(CARD_W, CARD_H)
+	tex.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	tex.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	tex.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	tex.name = "Slot%d" % index
+
+	# 费用（左上角）
+	var cost_label := Label.new()
+	cost_label.add_theme_font_size_override("font_size", COST_FONT_SIZE)
+	cost_label.position = Vector2(4, 2)
+	cost_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	cost_label.name = "Cost"
+	tex.add_child(cost_label)
+
+	# 按键编号（底部居中）
+	var key_label := Label.new()
+	key_label.add_theme_font_size_override("font_size", KEY_FONT_SIZE)
+	key_label.text = str(index + 1)
+	key_label.position = Vector2(CARD_W / 2 - 4, CARD_H - 14)
+	key_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	tex.add_child(key_label)
+
+	return tex
+
+## 更新技能栏显示
+func _refresh_skill_bar() -> void:
+	if not _skill_card_engine:
+		return
+	var energy: int = _skill_card_engine.energy
+	_skill_energy_label.text = "E:%d" % energy
+	_skill_energy_label.visible = true
+
+
+	for i in 5:
+		var slot: TextureRect = _skill_slots[i]
+		var cost: Label = slot.get_node("Cost")
+		if i < _skill_card_engine.hand.size():
+			var card: CardData = _skill_card_engine.hand[i]
+			if card.cover != "":
+				slot.texture = load(card.cover)
+			cost.text = str(card.cost)
+		else:
+			slot.texture = null
+			cost.text = ""
+
+func _on_skill_hand_changed() -> void:
+	_refresh_skill_bar()
+
+func _on_skill_energy_changed(new_energy: int) -> void:
+	_skill_energy_label.text = "E:%d" % new_energy
+
+func _on_skill_turn_progress(current: int, total: int) -> void:
+	if _skill_progress_fg:
+		var bw := 5.0 * CARD_W + 4.0 * CARD_GAP
+		_skill_progress_fg.size.x = bw * clampf(float(current) / float(total), 0.0, 1.0)
 
 func _make_label() -> Label:
 	var l := Label.new()

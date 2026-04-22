@@ -10,6 +10,6 @@ func _ready() -> void:
 	expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 
-func setup(card: AttackCardData) -> void:
+func setup(card: CardData) -> void:
 	if card.cover != "":
 		texture = load(card.cover)

@@ -1,0 +1,39 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://7ik3sqllwsas"]
+
+[ext_resource type="Texture2D" uid="uid://5cuvukuwelbl" path="res://sprite/meteor_strike_hit.png" id="1_b5osq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b5osq"]
+atlas = ExtResource("1_b5osq")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4gjcu"]
+atlas = ExtResource("1_b5osq")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pf4ku"]
+atlas = ExtResource("1_b5osq")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfy3g"]
+atlas = ExtResource("1_b5osq")
+region = Rect2(192, 0, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b5osq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4gjcu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pf4ku")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfy3g")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]

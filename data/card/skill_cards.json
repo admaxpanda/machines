@@ -1,0 +1,70 @@
+# skill_cards.json 格式说明
+#
+# 顶层：
+#   cards    技能卡数组
+#
+# 单张技能卡：
+#   id        唯一标识
+#   name      显示名称
+#   cost      技能能量消耗
+#   chain     效果链（嵌套字典，每个节点可含回调槽）
+#   exhaust   打出后是否消耗（true/false）
+#
+# 触发器与 attack_cards.json 相同，共享链式架构
+#
+# 原子效果（叶节点，做一件事）：
+#   与 attack_cards.json 共享：
+#     { "type": "deal_damage", "value": 6 }
+#     { "type": "apply_buff", "name": "shield", "value": 5, "duration": 5, "self_target": true }
+#     { "type": "knockback" }
+#     { "type": "draw_attack_cards", "value": 1 }
+#     { "type": "draw_skill_cards", "value": 1 }
+#     { "type": "gain_attack_energy", "value": 1 }
+#     { "type": "gain_skill_energy", "value": 1 }
+#     { "type": "channel_orb", "orb_id": "frost" }
+#   技能卡特有：
+#     { "type": "evoke_last_orb", "count": 2 }
+#
+{
+  "cards": [
+    {
+      "id": "defend",
+      "name": "DEFEND",
+      "description": "DEFEND_DESC",
+      "cost": 0,
+      "cover": "res://sprite/defend.png",
+      "chain": {
+        "type": "apply_buff",
+        "name": "shield",
+        "value": 5,
+        "duration": 5,
+        "self_target": true
+      },
+      "exhaust": false
+    },
+    {
+      "id": "zap",
+      "name": "ZAP",
+      "description": "ZAP_DESC",
+      "cost": 0,
+      "cover": "res://sprite/zap.png",
+      "chain": {
+        "type": "channel_orb",
+        "orb_id": "lightning"
+      },
+      "exhaust": false
+    },
+    {
+      "id": "dualcast",
+      "name": "DUALCAST",
+      "description": "DUALCAST_DESC",
+      "cost": 1,
+      "cover": "res://sprite/dualcast.png",
+      "chain": {
+        "type": "evoke_last_orb",
+        "count": 2
+      },
+      "exhaust": false
+    }
+  ]
+}

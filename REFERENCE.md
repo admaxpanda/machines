@@ -19,7 +19,7 @@
 | 3 | 弹幕 | Barrage | 1 | Common | 对随机敌人造成7伤害，共2次。 |
 | 4 | 光束单元 | Beam Cell | 1 | Common | 造成3伤害。施加1易伤。 |
 | 5 | 编译驱动 | Compile Driver | 1 | Common | 造成7伤害。你拥有的每种独特球抽1张牌。 |
-| 6 | 集中打击 | Focused Strike | 1 | Common | 造成9伤害。本回合获得1聚焦。 |
+| 6 | 集中打击 | Focused Strike | 1 | Common | 造成9伤害。本回合获得1集中。 |
 | 7 | 瞄准双眼 | Go for the Eyes | 1 | Common | 造成3伤害。若敌人意图攻击，施加1虚弱。 |
 | 8 | 污秽攻击 | Gunk Up | 1 | Common | 造成4伤害，共3次。将1张黏液加入你的弃牌堆。 |
 | 9 | 引雷针 | Lightning Rod | 1 | Common | （冰霜/闪电相关） |
@@ -36,7 +36,7 @@
 | 20 | 万物一心 | All for One | 1 | Uncommon | 造成10伤害。将弃牌堆中所有0费牌放入手中。 |
 | 21 | 散射炮 | Flak Cannon | 1 | Rare | 消耗所有状态牌。每消耗1张，对随机敌人造成8伤害。 |
 | 22 | 螺旋钻机 | Helix Drill | X | Rare | 造成3伤害，乘以本回合之前花费的能量数。 |
-| 23 | 超能光束 | Hyperbeam | 3 | Rare | 对所有敌人造成26伤害。失去3聚焦。 |
+| 23 | 超能光束 | Hyperbeam | 3 | Rare | 对所有敌人造成26伤害。失去3集中。 |
 | 24 | （未命名） | - | 1 | Uncommon | 造成13伤害。抽1张牌。当创建状态牌时，此卡本回合费用降为0。 |
 | 25 | （未命名） | - | 1 | Common | 造成7伤害，对随机敌人共2次。 |
 
@@ -57,7 +57,7 @@
 | 11 | 超频 | Overclock | 1 | Common | 抽2张牌。将1张灼伤加入弃牌堆。 |
 | 12 | 浏览 | Skim | 1 | Common | 抽3张牌。 |
 | 13 | 烟囱 | Smokestack | 1 | Common | 每当你创建状态牌时，对所有敌人造成5伤害。 |
-| 14 | 同步 | Synchronize | 0 | Uncommon | 本回合获得2聚焦，乘以你拥有的独特球数。消耗。 |
+| 14 | 同步 | Synchronize | 0 | Uncommon | 本回合获得2集中，乘以你拥有的独特球数。消耗。 |
 | 15 | 人工合成 | Synthesis | 1 | Uncommon | 造成12伤害。你打出的下一张能力牌费用为0。 |
 | 16 | 白噪音 | White Noise | 0 | Uncommon | 将1张随机能力牌加入手中。本回合免费打出。消耗。 |
 | 17 | 高速脱离 | Boost Away | ? | Uncommon | （防御/位移相关） |
@@ -89,7 +89,7 @@
 | 11 | 信号增强 | Signal Boost | 1 | Uncommon | 你打出的下一张能力牌额外打出1次。消耗。 |
 | 12 | 旋转工艺 | Spinner | 1 | Common | 回合开始时，引导1玻璃。 |
 | 13 | 化废为宝 | Trash to Treasure | 1 | Rare | 每当你创建状态牌时，引导1个随机球。 |
-| 14 | 偏差认知 | Biased Cognition | 1 | Rare | 获得4聚焦。回合开始时失去1聚焦。 |
+| 14 | 偏差认知 | Biased Cognition | 1 | Rare | 获得4集中。回合开始时失去1集中。 |
 | 15 | 放大 | Amplify | 1 | Uncommon | 激发最右侧的球4次。 |
 | 16 | 启动 | Boot Up | 1 | Common | 回合开始时，将1张随机普通牌加入手中。 |
 | 17 | 碎片整理 | Defragment | ? | Rare | （整理/优化相关，金卡） |

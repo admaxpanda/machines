@@ -1,0 +1,53 @@
+{
+  "buffs": [
+    {
+      "id": "shield",
+      "name": "护盾",
+      "duration_type": "turns",
+      "stacking": "shield",
+      "atomic": true
+    },
+    {
+      "id": "focus",
+      "name": "集中",
+      "duration_type": "turns",
+      "stacking": "extend",
+      "atomic": true
+    },
+    {
+      "id": "strength",
+      "name": "力量",
+      "duration_type": "permanent",
+      "stacking": "intensity",
+      "atomic": true
+    },
+    {
+      "id": "dexterity",
+      "name": "敏捷",
+      "duration_type": "permanent",
+      "stacking": "intensity",
+      "atomic": true
+    },
+    {
+      "id": "vulnerable",
+      "name": "易伤",
+      "duration_type": "turns",
+      "stacking": "extend",
+      "atomic": true
+    },
+    {
+      "id": "weak",
+      "name": "虚弱",
+      "duration_type": "turns",
+      "stacking": "extend",
+      "atomic": true
+    },
+    {
+      "id": "biased_cognition",
+      "name": "偏差认知",
+      "duration_type": "permanent",
+      "stacking": "intensity",
+      "atomic": true
+    }
+  ]
+}

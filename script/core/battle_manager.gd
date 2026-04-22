@@ -40,6 +40,8 @@ func _start_level(index: int) -> void:
 	_current_level_index = index
 	_state = State.RUNNING
 	_alive_enemies = 0
+	_reset_player_state()
+	_channel_starting_orb()
 	var level: LevelData = _levels[index]
 	_waves_running = level.waves.size()
 	level_started.emit(level.scene_index + 1, level.level_index + 1)
@@ -51,6 +53,8 @@ func _start_level(index: int) -> void:
 func on_level_cleared() -> void:
 	if _state != State.RUNNING:
 		return
+	_clear_orbs()
+	_reset_card_engines()
 	_state = State.REWARD
 	state_changed.emit("奖励")
 	if _card_engine:
@@ -124,6 +128,77 @@ func _on_enemy_died(enemy: CharacterBody2D) -> void:
 		_collect_gems_then_clear.call_deferred()
 		return
 	_check_level_cleared()
+
+## 清空所有充能球
+func _clear_orbs() -> void:
+	var managers := get_tree().get_nodes_in_group(&"orb_manager")
+	if managers.size() > 0:
+		managers[0].clear_all()
+
+## 重置 buffer 免伤次数
+func _reset_buffer_charges(player: CharacterBody2D) -> void:
+	var count := 0
+	for a in player.abilities:
+		if a.id == &"buffer":
+			count += 1
+	player.buffer_charges = count
+
+## 关卡开始时重置玩家状态：清空 buff → 重置球槽 → 重新施加能力效果
+func _reset_player_state() -> void:
+	var player := get_tree().get_first_node_in_group(&"player") as CharacterBody2D
+	if not player or not "abilities" in player:
+		return
+
+	# 保存 biased_cognition 剩余层数（跨关卡衰减后）
+	var biased_stacks: int = 0
+	if player.buff_container and player.buff_container.has_buff(&"biased_cognition"):
+		biased_stacks = player.buff_container.get_buff_stacks(&"biased_cognition")
+
+	# 清空所有 buff
+	if player.buff_container:
+		player.buff_container.clear_all()
+
+	# 重置球槽为基础值，再根据能力调整
+	var orb_managers := get_tree().get_nodes_in_group(&"orb_manager")
+	var orb_mgr = orb_managers[0] if orb_managers.size() > 0 else null
+	if orb_mgr:
+		orb_mgr.max_slots = 3
+		for a in player.abilities:
+			match a.id:
+				&"capacitor":
+					orb_mgr.max_slots += 2
+				&"bulk_up":
+					orb_mgr.max_slots = maxi(orb_mgr.max_slots - 1, 1)
+
+	# 重新施加永久能力 buff
+	for a in player.abilities:
+		match a.id:
+			&"defragment":
+				player.buff_container.add_buff(&"focus", 1, -1)
+			&"bulk_up":
+				player.buff_container.add_buff(&"strength", 2, -1)
+				player.buff_container.add_buff(&"dexterity", 2, -1)
+			&"biased_cognition":
+				if biased_stacks > 0:
+					player.buff_container.add_buff(&"focus", biased_stacks, -1)
+					player.buff_container.add_buff(&"biased_cognition", biased_stacks, -1)
+
+	# 重置 buffer 免伤次数
+	_reset_buffer_charges(player)
+
+## 重置卡牌引擎：所有牌归位，能量清零
+func _reset_card_engines() -> void:
+	if _card_engine:
+		_card_engine.reset_for_new_battle()
+	var skill_engines := get_tree().get_nodes_in_group(&"skill_card_engine")
+	if skill_engines.size() > 0:
+		skill_engines[0].reset_for_new_battle()
+
+## 关卡开始时自动获得一个电充能球
+func _channel_starting_orb() -> void:
+	var managers := get_tree().get_nodes_in_group(&"orb_manager")
+	if managers.size() > 0:
+		managers[0].channel_orb(&"lightning")
 
 ## 检查关卡是否通关：所有敌人死亡且所有波次生成完毕
 func _check_level_cleared() -> void:

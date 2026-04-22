@@ -43,11 +43,16 @@ func _ready() -> void:
 	if players.size() > 0:
 		_player = players[0] as CharacterBody2D
 
+var _dead := false
+
 func take_damage(amount: int) -> void:
+	if _dead:
+		return
 	var remaining: int = buff_container.apply_shield_damage(amount)
 	hp -= remaining
 	_update_health_bar()
 	if hp <= 0:
+		_dead = true
 		_spawn_xp_gem()
 		died.emit(self)
 		queue_free()

@@ -10,6 +10,7 @@ var slots: Array = []              ## Array[OrbSlot]
 var max_slots: int = 3
 var _orb_db: Dictionary = {}
 var _visuals: Array[AnimatedSprite2D] = []
+var _damage_labels: Array[Label] = []
 var _sprite_frames: SpriteFrames
 
 const ARC_RADIUS: float = 22.0
@@ -45,12 +46,24 @@ func _get_orb_position(index: int, total: int) -> Vector2:
 	var angle := -PI / 2.0 + spread * (0.5 - t)
 	return Vector2(cos(angle), sin(angle)) * ARC_RADIUS + ARC_CENTER
 
-## --- 充能/激发 ---
+## 清空所有球位
+func clear_all() -> void:
+	for sprite in _visuals:
+		if is_instance_valid(sprite):
+			sprite.queue_free()
+	slots.clear()
+	_visuals.clear()
+	_damage_labels.clear()
+	orbs_changed.emit()
+	print("[Orb] 清空所有球位")
+
+## 充能/激发 ---
 
 func channel_orb(orb_id: StringName) -> void:
 	if slots.size() >= max_slots:
 		var ejected_slot: OrbSlot = slots.pop_front()
 		var ejected_sprite: AnimatedSprite2D = _visuals.pop_front()
+		_damage_labels.pop_front()
 		var ejected_pos := ejected_sprite.global_position
 		_evoke_slot(ejected_slot, ejected_pos)
 		_animate_ejection(ejected_sprite)
@@ -63,6 +76,7 @@ func channel_orb(orb_id: StringName) -> void:
 	_visuals.append(sprite)
 	_animate_all()
 	print("[Orb] channel %s (槽位 %d/%d)" % [data.orb_name, slots.size(), max_slots])
+	_refresh_labels()
 	orb_channeled.emit(orb_id)
 	orbs_changed.emit()
 
@@ -71,6 +85,7 @@ func evoke_first() -> void:
 		return
 	var slot: OrbSlot = slots.pop_front()
 	var sprite: AnimatedSprite2D = _visuals.pop_front()
+	_damage_labels.pop_front()
 	var pos := sprite.global_position
 	_evoke_slot(slot, pos)
 	_animate_ejection(sprite)
@@ -80,6 +95,7 @@ func evoke_last() -> void:
 		return
 	var slot: OrbSlot = slots.pop_back()
 	var sprite: AnimatedSprite2D = _visuals.pop_back()
+	_damage_labels.pop_back()
 	var pos := sprite.global_position
 	_evoke_slot(slot, pos)
 	_animate_exit(sprite)
@@ -87,11 +103,15 @@ func evoke_last() -> void:
 ## --- 被动触发（异步，每个球间隔 PASSIVE_INTERVAL 秒）---
 
 func trigger_all_passives() -> void:
-	for i in range(slots.size()):
+	var count := slots.size()
+	for i in range(count):
+		if i >= slots.size() or i >= _visuals.size():
+			break
 		_play_passive_visual(i)
-		var orb_pos := _visuals[i].global_position if i < _visuals.size() else Vector2.ZERO
+		var orb_pos := _visuals[i].global_position
 		_trigger_passive(slots[i], orb_pos)
 		await get_tree().create_timer(PASSIVE_INTERVAL).timeout
+	_refresh_labels()
 
 ## --- 被动视觉效果：球副本放大淡出 ---
 
@@ -135,8 +155,8 @@ func _trigger_passive(slot: OrbSlot, orb_pos: Vector2 = Vector2.ZERO) -> void:
 		return
 
 	if data.passive_energy > 0:
-		_add_energy(data.passive_energy)
-		print("[Orb] %s passive: +%d energy" % [data.orb_name, data.passive_energy])
+		_add_pending_energy(data.passive_energy)
+		print("[Orb] %s passive: +%d energy (pending)" % [data.orb_name, data.passive_energy])
 		return
 
 	if not data.passive_chain.is_empty():
@@ -145,6 +165,11 @@ func _trigger_passive(slot: OrbSlot, orb_pos: Vector2 = Vector2.ZERO) -> void:
 			var damage := slot.glass_damage + data.passive_focus_bonus * focus
 			_inject_damage(chain, damage)
 			slot.glass_damage = maxi(slot.glass_damage - 1, 0)
+			# spinner: 额外发射次数
+			if chain.get("type") == &"multi_release":
+				var extra := _count_player_ability(&"spinner")
+				if extra > 0:
+					chain["count"] = int(chain.get("count", 1)) + extra
 			print("[Orb] %s passive: glass %d dmg" % [data.orb_name, damage])
 		else:
 			_apply_focus_to_chain(chain, data.passive_focus_bonus * focus)
@@ -236,6 +261,15 @@ func _add_energy(amount: int) -> void:
 	if engines.size() > 0:
 		engines[0].energy += amount
 		engines[0].energy_changed.emit(engines[0].energy)
+	var skill_engines := get_tree().get_nodes_in_group(&"skill_card_engine")
+	if skill_engines.size() > 0:
+		skill_engines[0].energy += amount
+		skill_engines[0].energy_changed.emit(skill_engines[0].energy)
+
+func _add_pending_energy(amount: int) -> void:
+	var engines := get_tree().get_nodes_in_group(&"card_engine")
+	if engines.size() > 0 and "pending_energy" in engines[0]:
+		engines[0].pending_energy += amount
 
 ## --- 护盾视觉（block.tres 动画，~50%透明度）---
 
@@ -275,6 +309,16 @@ func _get_player_buff_container() -> Node:
 			return child
 	return null
 
+func _count_player_ability(ability_id: StringName) -> int:
+	var player := _get_player()
+	if not player or not "abilities" in player:
+		return 0
+	var count := 0
+	for a in player.abilities:
+		if a.id == ability_id:
+			count += 1
+	return count
+
 ## --- 视觉节点管理 ---
 
 func _create_visual(data: OrbData) -> AnimatedSprite2D:
@@ -285,7 +329,36 @@ func _create_visual(data: OrbData) -> AnimatedSprite2D:
 		if _sprite_frames.has_animation(anim_name):
 			sprite.play(anim_name)
 	add_child(sprite)
+
+	var label := Label.new()
+	label.add_theme_font_size_override("font_size", 8)
+	label.position = Vector2(-6, 4)
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	sprite.add_child(label)
+	_damage_labels.append(label)
+
 	return sprite
+
+func _refresh_labels() -> void:
+	for i in slots.size():
+		if i >= _damage_labels.size():
+			break
+		var label: Label = _damage_labels[i]
+		var data: OrbData = slots[i].data
+		var text := ""
+		match data.id:
+			&"lightning":
+				var on_detect: Array = data.passive_chain.get("on_detect", [])
+				if not on_detect.is_empty():
+					text = str(int(on_detect[0].get("value", 0)))
+			&"frost":
+				text = str(int(data.passive_shield.get("amount", 0)))
+			&"dark":
+				text = str(int(slots[i].accumulated))
+			&"glass":
+				text = str(slots[i].glass_damage)
+		label.text = text
+		label.visible = text != ""
 
 func _animate_all() -> void:
 	for i in _visuals.size():

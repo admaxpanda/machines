@@ -1,0 +1,102 @@
+{
+  "abilities": [
+    {
+      "id": "machine_learning",
+      "name": "MACHINE_LEARNING",
+      "rarity": "common",
+      "description": "MACHINE_LEARNING_DESC",
+      "icon": "res://sprite/ability_card/machine_learning.png"
+    },
+    {
+      "id": "defragment",
+      "name": "DEFRAGMENT",
+      "rarity": "rare",
+      "description": "DEFRAGMENT_DESC",
+      "icon": "res://sprite/ability_card/defragment.png"
+    },
+    {
+      "id": "loop",
+      "name": "LOOP",
+      "rarity": "common",
+      "description": "LOOP_DESC",
+      "icon": "res://sprite/ability_card/loop.png"
+    },
+    {
+      "id": "capacitor",
+      "name": "CAPACITOR",
+      "rarity": "common",
+      "description": "CAPACITOR_DESC",
+      "icon": "res://sprite/ability_card/capacitor.png"
+    },
+    {
+      "id": "coolant",
+      "name": "COOLANT",
+      "rarity": "uncommon",
+      "description": "COOLANT_DESC",
+      "icon": "res://sprite/ability_card/coolant.png"
+    },
+    {
+      "id": "biased_cognition",
+      "name": "BIASED_COGNITION",
+      "rarity": "rare",
+      "description": "BIASED_COGNITION_DESC",
+      "icon": "res://sprite/ability_card/biased_cognition.png"
+    },
+    {
+      "id": "bulk_up",
+      "name": "BULK_UP",
+      "rarity": "rare",
+      "description": "BULK_UP_DESC",
+      "icon": "res://sprite/ability_card/bulk_up.png"
+    },
+    {
+      "id": "storm",
+      "name": "STORM",
+      "rarity": "rare",
+      "description": "STORM_DESC",
+      "icon": "res://sprite/ability_card/storm.png"
+    },
+    {
+      "id": "creative_ai",
+      "name": "CREATIVE_AI",
+      "rarity": "rare",
+      "description": "CREATIVE_AI_DESC",
+      "icon": "res://sprite/ability_card/creative_ai.png"
+    },
+    {
+      "id": "feral",
+      "name": "FERAL",
+      "rarity": "common",
+      "description": "FERAL_DESC",
+      "icon": "res://sprite/ability_card/feral.png"
+    },
+    {
+      "id": "echo_form",
+      "name": "ECHO_FORM",
+      "rarity": "rare",
+      "description": "ECHO_FORM_DESC",
+      "icon": "res://sprite/ability_card/echo_form.png"
+    },
+    {
+      "id": "buffer",
+      "name": "BUFFER",
+      "rarity": "common",
+      "description": "BUFFER_DESC",
+      "icon": "res://sprite/ability_card/buffer.png"
+    },
+    {
+      "id": "spinner",
+      "name": "SPINNER",
+      "rarity": "common",
+      "description": "SPINNER_DESC",
+      "icon": "res://sprite/ability_card/spinner.png"
+    }
+    {
+      "id": "hailstorm",
+      "name": "HAILSTORM",
+      "rarity": "uncommon",
+      "description": "HAILSTORM_DESC",
+      "icon": "res://sprite/ability_card/hailstorm.png"
+    }
+  ]
+}

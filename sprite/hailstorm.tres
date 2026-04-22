@@ -1,0 +1,39 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://6jsogxe6un03"]
+
+[ext_resource type="Texture2D" uid="uid://b0wpn1wr5r7ha" path="res://sprite/hailstorm.png" id="1_p5i5r"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5vq3k"]
+atlas = ExtResource("1_p5i5r")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d8vas"]
+atlas = ExtResource("1_p5i5r")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sdvia"]
+atlas = ExtResource("1_p5i5r")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ob53"]
+atlas = ExtResource("1_p5i5r")
+region = Rect2(96, 0, 32, 32)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5vq3k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d8vas")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sdvia")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ob53")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]

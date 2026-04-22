@@ -1,0 +1,66 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://c7gcrxmi0so3c"]
+
+[ext_resource type="Texture2D" uid="uid://c8ccjspsymh86" path="res://sprite/meteor_strike.png" id="1_mec51"]
+[ext_resource type="Texture2D" uid="uid://5cuvukuwelbl" path="res://sprite/meteor_strike_hit.png" id="2_p85nx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m2dyv"]
+atlas = ExtResource("1_mec51")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ficnq"]
+atlas = ExtResource("1_mec51")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1uv3r"]
+atlas = ExtResource("1_mec51")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bomaj"]
+atlas = ExtResource("2_p85nx")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0hdcq"]
+atlas = ExtResource("2_p85nx")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y3ie1"]
+atlas = ExtResource("2_p85nx")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7xevx"]
+atlas = ExtResource("2_p85nx")
+region = Rect2(192, 0, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m2dyv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ficnq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1uv3r")
+}],
+"loop": true,
+"name": &"falling",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bomaj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0hdcq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y3ie1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7xevx")
+}],
+"loop": true,
+"name": &"hit",
+"speed": 5.0
+}]

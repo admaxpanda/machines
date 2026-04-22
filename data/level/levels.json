@@ -27,8 +27,22 @@
         {
           "enemy_id": "slime_leaf",
           "start_time": 0.0,
-          "count": 20,
-          "spawn_interval": 1.0,
+          "count": 10,
+          "spawn_interval": 0.5,
+          "type": "normal"
+        }
+      ]
+    },
+    {
+      "id": "scene1_level2",
+      "scene_index": 0,
+      "level_index": 1,
+      "waves": [
+        {
+          "enemy_id": "slime_leaf",
+          "start_time": 0.0,
+          "count": 10,
+          "spawn_interval": 0.5,
           "type": "normal"
         }
       ]

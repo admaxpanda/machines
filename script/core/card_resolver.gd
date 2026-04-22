@@ -3,7 +3,7 @@ extends RefCounted
 
 ## 卡牌结算器：负责寻找目标位置，将卡牌转交给效果系统执行
 
-static func play(card: AttackCardData, context: Dictionary) -> void:
+static func play(card: CardData, context: Dictionary) -> void:
 	var source: Node2D = context.get("source")
 	if not source:
 		return

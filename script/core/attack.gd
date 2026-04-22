@@ -18,23 +18,42 @@ static func _execute_node(node: Dictionary, source: Node2D, target: Node2D, cont
 			_beam_detect(node, source, context)
 		"multi_release":
 			_multi_release(node, source, context)
+		"fall":
+			_fall(node, source, context)
 		"deal_damage":
 			if target and target.has_method("take_damage"):
-				target.take_damage(int(node.get("value", 0)))
+				var dmg: int = int(node.get("value", 0))
+				target.take_damage(dmg)
+				_show_damage_number(target, dmg)
 		"knockback":
 			print("[Attack] knockback target=%s source=%s" % [target, source])
-		"draw_cards":
-			print("[Attack] draw_cards value=%d" % int(node.get("value", 0)))
-		"gain_energy":
-			print("[Attack] gain_energy value=%d" % int(node.get("value", 0)))
-		"apply_debuff":
-			if target:
+		"draw_attack_cards":
+			print("[Attack] draw_attack_cards value=%d" % int(node.get("value", 0)))
+		"draw_skill_cards":
+			print("[Attack] draw_skill_cards value=%d" % int(node.get("value", 0)))
+		"gain_attack_energy":
+			print("[Attack] gain_attack_energy value=%d" % int(node.get("value", 0)))
+		"gain_skill_energy":
+			print("[Attack] gain_skill_energy value=%d" % int(node.get("value", 0)))
+		"apply_buff":
+			var buff_target: Node2D = target
+			if node.get("self_target", false):
+				buff_target = context.get("source") as Node2D
+			if buff_target:
 				var stacks: int = int(node.get("value", 1))
 				var duration: int = int(node.get("duration", 1))
-				for child in target.get_children():
+				for child in buff_target.get_children():
 					if child.is_in_group(&"buff_container"):
 						child.add_buff(StringName(node.get("name", "")), stacks, duration)
 						break
+		"evoke_last_orb":
+			var evk_count: int = int(node.get("count", 1))
+			var evk_player: Node2D = context.get("source") as Node2D
+			if evk_player:
+				var evk_managers := evk_player.get_tree().get_nodes_in_group(&"orb_manager")
+				if evk_managers.size() > 0:
+					for evk_i in evk_count:
+						evk_managers[0].evoke_last()
 		"channel_orb":
 			var orb_id: StringName = StringName(node.get("orb_id", ""))
 			var player: Node2D = context.get("source")
@@ -42,6 +61,26 @@ static func _execute_node(node: Dictionary, source: Node2D, target: Node2D, cont
 				var managers := player.get_tree().get_nodes_in_group(&"orb_manager")
 				if managers.size() > 0:
 					managers[0].channel_orb(orb_id)
+
+## --- 伤害飘字 ---
+
+static func _show_damage_number(target: Node2D, dmg: int) -> void:
+	var label := Label.new()
+	label.text = str(dmg)
+	label.add_theme_font_size_override("font_size", 14)
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.add_theme_color_override("font_color", Color.WHITE)
+	label.add_theme_color_override("font_outline_color", Color.BLACK)
+	label.add_theme_constant_override("outline_size", 2)
+	label.global_position = target.global_position + Vector2(randf_range(-8, 8), -12)
+	label.z_index = 100
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	target.get_tree().current_scene.add_child(label)
+	var tween := target.get_tree().create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(label, "position:y", label.position.y - 30, 0.6)
+	tween.tween_property(label, "modulate:a", 0.0, 0.6)
+	tween.chain().tween_callback(label.queue_free)
 
 ## --- 位置解析 ---
 
@@ -61,6 +100,8 @@ static func _resolve_position(pos_ref: Variant, source: Node2D, context: Diction
 		"enemy":
 			var pos = context.get("target_position")
 			return pos if pos else source.global_position
+		"mouse":
+			return source.get_global_mouse_position()
 		"parent":
 			var pos = context.get("parent_position")
 			if pos:
@@ -146,7 +187,10 @@ static func _aoe_detect(node: Dictionary, source: Node2D, context: Dictionary) -
 			circle.radius = float(node.get("radius", 30.0))
 			col.shape = circle
 
-	area.rotation = direction.angle()
+	if node.has("rotation"):
+		area.rotation = float(node.get("rotation"))
+	else:
+		area.rotation = direction.angle()
 	area.add_child(col)
 
 	var anim_path: String = str(node.get("animation", ""))
@@ -155,8 +199,22 @@ static func _aoe_detect(node: Dictionary, source: Node2D, context: Dictionary) -
 		var frames: SpriteFrames = load(anim_path)
 		if frames:
 			sprite.sprite_frames = frames
-			sprite.play()
+			var anim_name: String = str(node.get("animation_name", ""))
+			if anim_name != "" and frames.has_animation(StringName(anim_name)):
+				sprite.play(StringName(anim_name))
+			else:
+				sprite.play()
 		area.add_child(sprite)
+	else:
+		var aoe_radius: float = float(node.get("radius", 30.0))
+		var circle_pts := PackedVector2Array()
+		for j in 20:
+			var a := TAU * float(j) / 20.0
+			circle_pts.append(Vector2(cos(a), sin(a)) * aoe_radius)
+		var poly := Polygon2D.new()
+		poly.color = Color(1.0, 1.0, 1.0, 0.35)
+		poly.polygon = circle_pts
+		area.add_child(poly)
 
 	area.global_position = spawn_pos
 	source.get_tree().current_scene.add_child(area)
@@ -184,6 +242,7 @@ static func _beam_detect(node: Dictionary, source: Node2D, context: Dictionary) 
 	var target_pos := _resolve_position(node.get("target", "enemy"), source, context)
 	var beam_length: float = float(node.get("length", 100.0))
 	var width: float = float(node.get("width", 10.0))
+	var hit_width: float = float(node.get("hit_width", width))
 	var tail_coeff: float = float(node.get("tail_width_coeff", 1.0))
 	var lifetime: float = float(node.get("lifetime", 0.3))
 	var min_opacity: float = float(node.get("min_opacity", 0.0))
@@ -203,8 +262,15 @@ static func _beam_detect(node: Dictionary, source: Node2D, context: Dictionary) 
 	var p2 := end_pos - perp * half_tail
 	var p3 := end_pos + perp * half_tail
 
+	var hit_half := hit_width / 2.0
+	var hit_half_tail := hit_width * tail_coeff / 2.0
+	var hp0 := origin_pos + perp * hit_half
+	var hp1 := origin_pos - perp * hit_half
+	var hp2 := end_pos - perp * hit_half_tail
+	var hp3 := end_pos + perp * hit_half_tail
+
 	var shape := ConvexPolygonShape2D.new()
-	shape.points = PackedVector2Array([p0 - origin_pos, p1 - origin_pos, p2 - origin_pos, p3 - origin_pos])
+	shape.points = PackedVector2Array([hp0 - origin_pos, hp1 - origin_pos, hp2 - origin_pos, hp3 - origin_pos])
 
 	var area := Area2D.new()
 	var col := CollisionShape2D.new()
@@ -237,6 +303,75 @@ static func _beam_detect(node: Dictionary, source: Node2D, context: Dictionary) 
 	tween.tween_callback(poly.queue_free)
 	tween.tween_callback(area.queue_free)
 
+## 坠落触发器：从天空投下投射物，落地后触发效果
+static func _fall(node: Dictionary, source: Node2D, context: Dictionary) -> void:
+	if not source:
+		return
+	var target_pos := _resolve_position(node.get("target", "random_enemy"), source, context)
+	var max_offset_x: int = int(node.get("max_offset_x", 0))
+	var start_height: float = float(node.get("start_height_h", 120.0))
+	var fall_time: float = float(node.get("t", 0.4))
+	var on_land: Array = node.get("on_land", [])
+
+	var rand_offset := randf_range(-float(max_offset_x), float(max_offset_x))
+	var start_pos := target_pos + Vector2(rand_offset, -start_height)
+	var fall_dir := (target_pos - start_pos)
+	# 视觉节点
+	var visual := Node2D.new()
+	var anim_path: String = str(node.get("animation", ""))
+	if anim_path != "":
+		var sprite := AnimatedSprite2D.new()
+		var frames: SpriteFrames = load(anim_path)
+		if frames:
+			sprite.sprite_frames = frames
+			var anim_name: String = str(node.get("fall_animation", ""))
+			if anim_name == "" and frames.has_animation(&"falling"):
+				anim_name = "falling"
+			if anim_name != "" and frames.has_animation(StringName(anim_name)):
+				frames.set_animation_loop(StringName(anim_name), true)
+				sprite.play(StringName(anim_name))
+			else:
+				sprite.play()
+		visual.add_child(sprite)
+
+	# 素材默认朝下(0,1)，计算旋转使朝向对齐下落方向
+	if fall_dir.length() > 0.001:
+		visual.rotation = fall_dir.angle() - PI / 2.0
+
+	visual.global_position = start_pos
+	visual.z_index = 50
+	source.get_tree().current_scene.add_child(visual)
+
+	# 移动动画
+	var tween := source.get_tree().create_tween()
+	tween.tween_property(visual, "global_position", target_pos, fall_time)
+	tween.tween_callback(func() -> void:
+		visual.queue_free()
+		# 落地时缩放反馈
+		_show_land_impact(target_pos, source)
+		var land_context := context.duplicate()
+		land_context["parent_position"] = target_pos
+		for effect in on_land:
+			_execute_node(effect, source, null, land_context)
+	)
+
+## 坠落落地视觉反馈
+static func _show_land_impact(pos: Vector2, source: Node2D) -> void:
+	var circle := Node2D.new()
+	var poly := Polygon2D.new()
+	var pts := PackedVector2Array()
+	for j in 12:
+		var a := TAU * float(j) / 12.0
+		pts.append(Vector2(cos(a), sin(a)) * 15.0)
+	poly.polygon = pts
+	poly.color = Color(1.0, 1.0, 1.0, 0.5)
+	circle.add_child(poly)
+	circle.global_position = pos
+	source.get_tree().current_scene.add_child(circle)
+	var tween := source.get_tree().create_tween()
+	tween.tween_property(poly, "modulate:a", 0.0, 0.2)
+	tween.tween_callback(circle.queue_free)
+
 ## 投射物触发器
 static func _spawn_projectile(node: Dictionary, source: Node2D, context: Dictionary) -> void:
 	if not source:
@@ -262,7 +397,11 @@ static func _spawn_projectile(node: Dictionary, source: Node2D, context: Diction
 		var frames: SpriteFrames = load(anim_path)
 		if frames:
 			sprite.sprite_frames = frames
-			sprite.play()
+			var anim_name: String = str(node.get("animation_name", ""))
+			if anim_name != "" and frames.has_animation(StringName(anim_name)):
+				sprite.play(StringName(anim_name))
+			else:
+				sprite.play()
 		area.add_child(sprite)
 
 	var script: GDScript = load("res://script/entity/delivery_projectile.gd")

@@ -17,6 +17,8 @@
 #     "tail_width_coeff": 1.0, "lifetime": 0.3, "min_opacity": 0.0, "on_detect": [...] }
 #   { "type": "multi_release", "count": 4, "interval": 0.05,
 #     "chains": [ { ... }, { ... }, ... ] }
+#   { "type": "fall", "t": 0.4, "max_offset_x": 30, "start_height_h": 120,
+#     "target": "random_enemy", "animation": "...", "on_land": [...] }
 #
 # origin/target 可选值：
 #   "player" / "enemy" / "parent"
@@ -25,17 +27,20 @@
 #
 # 原子效果（叶节点，做一件事）：
 #   { "type": "deal_damage", "value": 6 }
-#   { "type": "apply_debuff", "name": "weak", "duration": 1 }
+#   { "type": "apply_buff", "name": "weak", "value": 1, "duration": 1 }
 #   { "type": "knockback" }
-#   { "type": "draw_cards", "value": 1 }
-#   { "type": "gain_energy", "value": 1 }
+#   { "type": "draw_attack_cards", "value": 1 }
+#   { "type": "draw_skill_cards", "value": 1 }
+#   { "type": "gain_attack_energy", "value": 1 }
+#   { "type": "gain_skill_energy", "value": 1 }
 #   { "type": "channel_orb", "orb_id": "frost" }
 
 {
   "cards": [
     {
       "id": "strike",
-      "name": "打击",
+      "name": "STRIKE",
+      "description": "STRIKE_DESC",
       "cost": 1,
       "cover": "res://sprite/strike_card.png",
       "chain": {
@@ -56,7 +61,8 @@
     },
     {
       "id": "cold_snap",
-      "name": "寒流",
+      "name": "COLD_SNAP",
+      "description": "COLD_SNAP_DESC",
       "cost": 1,
       "cover": "res://sprite/cold_snap_card.png",
       "chain": {
@@ -82,6 +88,41 @@
               { "type": "channel_orb", "orb_id": "frost" }
             ]
           }
+        ]
+      },
+      "exhaust": false
+    },
+    {
+      "id": "meteor_strike",
+      "name": "METEOR_STRIKE",
+      "description": "METEOR_STRIKE_DESC",
+      "cost": 2,
+      "cover": "res://sprite/attack_card/meteor_strike.png",
+      "chain": {
+        "type": "fall",
+        "t": 0.5,
+        "max_offset_x": 400,
+        "start_height_h": 140,
+        "target": "enemy",
+        "animation": "res://sprite/meteor_strike.tres",
+        "on_land": [
+          {
+            "type": "aoe_detect",
+            "shape": "circle",
+            "radius": 35,
+            "origin": "parent",
+            "target": "player",
+            "offset": 0,
+            "rotation": 0,
+            "animation": "res://sprite/meteor_strike_hit.tres",
+            "lifetime": 0.3,
+            "on_detect": [
+              { "type": "deal_damage", "value": 24 }
+            ]
+          },
+          { "type": "channel_orb", "orb_id": "plasma" },
+          { "type": "channel_orb", "orb_id": "plasma" },
+          { "type": "channel_orb", "orb_id": "plasma" }
         ]
       },
       "exhaust": false
