@@ -1,0 +1,39 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://d0r3cqkx2id5u"]
+
+[ext_resource type="Texture2D" uid="uid://cwa5jkr762co7" path="res://sprite/claw.png" id="1_1saw4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7hi7v"]
+atlas = ExtResource("1_1saw4")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o3vs7"]
+atlas = ExtResource("1_1saw4")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_old3y"]
+atlas = ExtResource("1_1saw4")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g2wss"]
+atlas = ExtResource("1_1saw4")
+region = Rect2(96, 0, 32, 32)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7hi7v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o3vs7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_old3y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g2wss")
+}],
+"loop": true,
+"name": &"default",
+"speed": 20.0
+}]

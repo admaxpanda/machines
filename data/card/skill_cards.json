@@ -24,6 +24,7 @@
 #     { "type": "channel_orb", "orb_id": "frost" }
 #   技能卡特有：
 #     { "type": "evoke_last_orb", "count": 2 }
+#     { "type": "spawn_glass_barrier", "origin": "player" }
 #
 {
   "cards": [
@@ -63,6 +64,363 @@
       "chain": {
         "type": "evoke_last_orb",
         "count": 2
+      },
+      "exhaust": false
+    },
+    {
+      "id": "glasswork",
+      "name": "GLASSWORK",
+      "description": "GLASSWORK_DESC",
+      "cost": 1,
+      "cover": "res://sprite/skill_card/glasswork.png",
+      "chain": {
+        "type": "multi_release",
+        "count": 3,
+        "interval": 0,
+        "chains": [
+          { "type": "apply_buff", "name": "shield", "value": 5, "duration": 5, "self_target": true },
+          { "type": "spawn_glass_barrier", "origin": "player" },
+          { "type": "apply_buff", "name": "glass_channel", "value": 1, "duration": 5, "self_target": true }
+        ]
+      },
+      "exhaust": false
+    },
+    {
+      "id": "darkness",
+      "name": "DARKNESS",
+      "description": "DARKNESS_DESC",
+      "cost": 1,
+      "cover": "res://sprite/skill_card/darkness.png",
+      "chain": {
+        "type": "multi_release",
+        "count": 2,
+        "interval": 0,
+        "chains": [
+          { "type": "channel_orb", "orb_id": "dark" },
+          { "type": "trigger_dark_passives" }
+        ]
+      },
+      "exhaust": false
+    },
+    {
+      "id": "lightning_rod",
+      "name": "LIGHTNING_ROD_CARD",
+      "description": "LIGHTNING_ROD_CARD_DESC",
+      "cost": 1,
+      "cover": "res://sprite/skill_card/lightning_rod.png",
+      "chain": {
+        "type": "multi_release",
+        "count": 2,
+        "interval": 0,
+        "chains": [
+          { "type": "apply_buff", "name": "shield", "value": 5, "duration": 5, "self_target": true },
+          { "type": "spawn_lightning_rod_barrier", "origin": "player" }
+        ]
+      },
+      "exhaust": false
+    },
+    {
+      "id": "voltaic",
+      "name": "VOLTAIC",
+      "description": "VOLTAIC_DESC",
+      "cost": 3,
+      "cover": "res://sprite/skill_card/voltaic.png",
+      "chain": {
+        "type": "multi_release",
+        "count": 2,
+        "interval": 0,
+        "chains": [
+          { "type": "show_golden_number", "value": { "var": "lightning_channeled" } },
+          {
+            "type": "multi_release",
+            "count": { "var": "lightning_channeled" },
+            "interval": 0.05,
+            "chains": [
+              { "type": "channel_orb", "orb_id": "lightning" }
+            ]
+          }
+        ]
+      },
+      "exhaust": false
+    },
+    {
+      "id": "white_noise",
+      "name": "WHITE_NOISE",
+      "description": "WHITE_NOISE_DESC",
+      "cost": 1,
+      "cover": "res://sprite/skill_card/white_noise.png",
+      "chain": {
+        "type": "extra_ability_reward"
+      },
+      "exhaust": true
+    },
+    {
+      "id": "signal_boost",
+      "name": "SIGNAL_BOOST",
+      "description": "SIGNAL_BOOST_DESC",
+      "cost": 1,
+      "cover": "res://sprite/skill_card/signal_boost.png",
+      "chain": {
+        "type": "signal_boost"
+      },
+      "exhaust": true
+    },
+    {
+      "id": "double_energy",
+      "name": "DOUBLE_ENERGY",
+      "description": "DOUBLE_ENERGY_DESC",
+      "cost": 1,
+      "cover": "res://sprite/skill_card/double_energy.png",
+      "chain": {
+        "type": "double_skill_energy"
+      },
+      "exhaust": true
+    },
+    {
+      "id": "boot_sequence",
+      "name": "BOOT_SEQUENCE",
+      "description": "BOOT_SEQUENCE_DESC",
+      "cost": 0,
+      "cover": "res://sprite/skill_card/boot_sequence.png",
+      "chain": {
+        "type": "apply_buff",
+        "name": "shield",
+        "value": 10,
+        "duration": -1,
+        "self_target": true
+      },
+      "innate": true,
+      "exhaust": true
+    },
+    {
+      "id": "genetic_algorithm",
+      "name": "GENETIC_ALGORITHM",
+      "description": "GENETIC_ALGORITHM_DESC",
+      "cost": 1,
+      "cover": "res://sprite/skill_card/genetic_algorithm.png",
+      "chain": {
+        "type": "genetic_shield"
+      },
+      "exhaust": true
+    },
+    {
+      "id": "chill",
+      "name": "CHILL",
+      "description": "CHILL_DESC",
+      "cost": 0,
+      "cover": "res://sprite/skill_card/chill.png",
+      "chain": {
+        "type": "ring_detect",
+        "origin": "player",
+        "target": "player",
+        "min_radius": 0,
+        "max_radius": 200,
+        "time": 0.4,
+        "line_width": 3,
+        "color": "#AADDFF",
+        "on_detect": [
+          { "type": "apply_buff", "name": "slow", "value": 1, "duration": 10 },
+          { "type": "channel_orb", "orb_id": "frost" }
+        ]
+      },
+      "exhaust": false
+    },
+    {
+      "id": "fight_through",
+      "name": "FIGHT_THROUGH",
+      "description": "FIGHT_THROUGH_DESC",
+      "cost": 1,
+      "cover": "res://sprite/skill_card/fight_through.png",
+      "chain": {
+        "type": "multi_release",
+        "count": 2,
+        "interval": 0,
+        "chains": [
+          { "type": "apply_buff", "name": "shield", "value": 13, "duration": -1, "self_target": true },
+          { "type": "add_card_to_draw_pile", "card_id": "wound", "pool": "status" }
+        ]
+      },
+      "exhaust": false
+    },
+    {
+      "id": "hotfix",
+      "name": "HOTFIX",
+      "description": "HOTFIX_DESC",
+      "cost": 0,
+      "cover": "res://sprite/skill_card/hotfix.png",
+      "chain": {
+        "type": "apply_buff",
+        "name": "focus",
+        "value": 2,
+        "duration": 10,
+        "self_target": true
+      },
+      "exhaust": false
+    },
+    {
+      "id": "synchronize",
+      "name": "SYNCHRONIZE",
+      "description": "SYNCHRONIZE_DESC",
+      "cost": 1,
+      "cover": "res://sprite/skill_card/synchronize.png",
+      "chain": {
+        "type": "focus_per_unique_orb",
+        "value": 2,
+        "duration": 10
+      },
+      "exhaust": false
+    },
+    {
+      "id": "fusion",
+      "name": "FUSION",
+      "description": "FUSION_DESC",
+      "cost": 2,
+      "cover": "res://sprite/skill_card/fusion.png",
+      "chain": {
+        "type": "apply_buff",
+        "name": "fusion",
+        "value": 1,
+        "duration": 5,
+        "self_target": true
+      },
+      "exhaust": false
+    },
+    {
+      "id": "chaos",
+      "name": "CHAOS",
+      "description": "CHAOS_DESC",
+      "cost": 1,
+      "cover": "res://sprite/skill_card/chaos.png",
+      "chain": {
+        "type": "apply_buff",
+        "name": "chaos",
+        "value": 1,
+        "duration": 5,
+        "self_target": true
+      },
+      "exhaust": false
+    },
+    {
+      "id": "coolheaded",
+      "name": "COOLHEADED",
+      "description": "COOLHEADED_DESC",
+      "cost": 1,
+      "cover": "res://sprite/skill_card/coolheaded.png",
+      "chain": {
+        "type": "multi_release",
+        "count": 2,
+        "interval": 0,
+        "chains": [
+          { "type": "draw_skill_cards", "value": 2 },
+          { "type": "channel_orb", "orb_id": "frost" }
+        ]
+      },
+      "exhaust": false
+    },
+    {
+      "id": "skim",
+      "name": "SKIM",
+      "description": "SKIM_DESC",
+      "cost": 1,
+      "cover": "res://sprite/skill_card/skim.png",
+      "chain": {
+        "type": "multi_release",
+        "count": 2,
+        "interval": 0,
+        "chains": [
+          { "type": "draw_skill_cards", "value": 3 },
+          { "type": "apply_buff", "name": "extra_draw", "value": 1, "duration": 5, "self_target": true }
+        ]
+      },
+      "exhaust": false
+    },
+    {
+      "id": "overclock",
+      "name": "OVERCLOCK",
+      "description": "OVERCLOCK_DESC",
+      "cost": 0,
+      "cover": "res://sprite/skill_card/overclock.png",
+      "chain": {
+        "type": "multi_release",
+        "count": 3,
+        "interval": 0,
+        "chains": [
+          { "type": "draw_skill_cards", "value": 1 },
+          { "type": "apply_buff", "name": "extra_draw", "value": 2, "duration": 5, "self_target": true },
+          { "type": "add_card_to_draw_pile", "card_id": "burn", "pool": "status", "engine": "attack" }
+        ]
+      },
+      "exhaust": false
+    },
+    {
+      "id": "boost_away",
+      "name": "BOOST_AWAY",
+      "description": "BOOST_AWAY_DESC",
+      "cost": 0,
+      "cover": "res://sprite/skill_card/boost_away.png",
+      "chain": {
+        "type": "multi_release",
+        "count": 2,
+        "interval": 0,
+        "chains": [
+          { "type": "grant_invincible", "duration": 1.0 },
+          { "type": "add_card_to_draw_pile", "card_id": "dizzy", "pool": "status", "engine": "attack" }
+        ]
+      },
+      "exhaust": false
+    },
+    {
+      "id": "supercritical",
+      "name": "SUPERCRITICAL",
+      "description": "SUPERCRITICAL_DESC",
+      "cost": 0,
+      "cover": "res://sprite/skill_card/supercritical.png",
+      "chain": {
+        "type": "multi_release",
+        "count": 3,
+        "interval": 0,
+        "chains": [
+          { "type": "gain_skill_energy", "value": 4 },
+          { "type": "apply_buff", "name": "extra_draw", "value": 5, "duration": 5, "self_target": true },
+          { "type": "apply_buff", "name": "extra_attack_energy", "value": 5, "duration": 5, "self_target": true }
+        ]
+      },
+      "exhaust": true
+    },
+    {
+      "id": "turbo",
+      "name": "TURBO",
+      "description": "TURBO_DESC",
+      "cost": 0,
+      "cover": "res://sprite/skill_card/turbo.png",
+      "chain": {
+        "type": "multi_release",
+        "count": 5,
+        "interval": 0,
+        "chains": [
+          { "type": "gain_skill_energy", "value": 2 },
+          { "type": "add_card_to_draw_pile", "card_id": "void", "pool": "status", "engine": "attack", "destination": "discard" },
+          { "type": "add_card_to_draw_pile", "card_id": "void", "pool": "status", "engine": "skill", "destination": "discard" },
+          { "type": "apply_buff", "name": "extra_draw", "value": 1, "duration": 5, "self_target": true },
+          { "type": "apply_buff", "name": "extra_attack_energy", "value": 1, "duration": 5, "self_target": true }
+        ]
+      },
+      "exhaust": false
+    },
+    {
+      "id": "leap",
+      "name": "LEAP",
+      "description": "LEAP_DESC",
+      "cost": 1,
+      "cover": "res://sprite/skill_card/leap.png",
+      "chain": {
+        "type": "multi_release",
+        "count": 2,
+        "interval": 0,
+        "chains": [
+          { "type": "apply_buff", "name": "shield", "value": 9, "duration": 5, "self_target": true },
+          { "type": "dash", "distance": 100, "duration": 0.1 }
+        ]
       },
       "exhaust": false
     }

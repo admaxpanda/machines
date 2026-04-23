@@ -1,0 +1,39 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://dwwrb470g2tp2"]
+
+[ext_resource type="Texture2D" uid="uid://c747s3712f60o" path="res://sprite/uproar.png" id="1_rp5un"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eu1wj"]
+atlas = ExtResource("1_rp5un")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u6pqi"]
+atlas = ExtResource("1_rp5un")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j62gk"]
+atlas = ExtResource("1_rp5un")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_716bw"]
+atlas = ExtResource("1_rp5un")
+region = Rect2(96, 0, 32, 32)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eu1wj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u6pqi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j62gk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_716bw")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]

@@ -13,6 +13,26 @@ func _ready() -> void:
 	hand_limit = 5
 	draw_per_turn = 1
 
+## 初始化：固有卡先入手牌
+func initialize(deck: Array) -> void:
+	var innate_cards: Array = []
+	var remaining: Array = []
+	for card in deck:
+		if card.innate:
+			innate_cards.append(card)
+		else:
+			remaining.append(card)
+	draw_pile = remaining
+	hand.clear()
+	discard_pile.clear()
+	exhaust_pile.clear()
+	energy = 0
+	for card in innate_cards:
+		if hand.size() < hand_limit:
+			hand.append(card)
+	draw_pile.shuffle()
+	hand_changed.emit()
+
 ## 每攻击回合开始时调用，每 N 回合抽牌+获能
 func start_turn() -> void:
 	_turn_counter += 1
@@ -28,7 +48,7 @@ func play_at(index: int) -> void:
 	if index < 0 or index >= hand.size():
 		return
 	var card: CardData = hand[index]
-	if card.cost > energy:
+	if card.cost > energy or card.unplayable:
 		return
 	_play_card(card)
 
@@ -50,5 +70,18 @@ func _check_storm() -> void:
 ## 关卡结束归位：重置进度计数器
 func reset_for_new_battle() -> void:
 	super.reset_for_new_battle()
+	# 固有卡重新入手牌
+	var innate_remaining: Array = []
+	var other: Array = []
+	for card in draw_pile:
+		if card.innate:
+			innate_remaining.append(card)
+		else:
+			other.append(card)
+	for card in innate_remaining:
+		if hand.size() < hand_limit:
+			hand.append(card)
+	draw_pile = other
+	hand_changed.emit()
 	_turn_counter = 0
 	turn_progress_changed.emit(0, draw_every_n_turns)

@@ -1,0 +1,32 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://dsby7v8ij2bdj"]
+
+[ext_resource type="Texture2D" uid="uid://vqsbata1sqq" path="res://sprite/focused_strike.png" id="1_oi1ld"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2xlic"]
+atlas = ExtResource("1_oi1ld")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fcure"]
+atlas = ExtResource("1_oi1ld")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qnpfm"]
+atlas = ExtResource("1_oi1ld")
+region = Rect2(64, 0, 32, 32)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2xlic")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fcure")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qnpfm")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]

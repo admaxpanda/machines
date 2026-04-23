@@ -1,0 +1,39 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://bmyeob65236km"]
+
+[ext_resource type="Texture2D" uid="uid://bc3irr4dlapq5" path="res://sprite/glass_reflect_ball.png" id="1_le22p"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wgexy"]
+atlas = ExtResource("1_le22p")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_12tq3"]
+atlas = ExtResource("1_le22p")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gmtud"]
+atlas = ExtResource("1_le22p")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kt6sr"]
+atlas = ExtResource("1_le22p")
+region = Rect2(192, 0, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wgexy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_12tq3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gmtud")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kt6sr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]

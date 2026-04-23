@@ -13,12 +13,27 @@
 # 触发器（产生事件，含回调槽）：
 #   { "type": "aoe_detect", "radius": 30, "animation": "...", "lifetime": 0.2, "on_detect": [...] }
 #   { "type": "spawn_projectile", "speed": 300, "max_range": 200, "animation": "...", "on_hit": [...] }
+#   { "type": "boomerang", "origin": "player", "target": "enemy", "length": 150, "time": 0.6,
+#     "animation": "...", "on_detect": [...] }
 #   { "type": "beam_detect", "origin": "player", "target": "enemy", "length": 100, "width": 10,
-#     "tail_width_coeff": 1.0, "lifetime": 0.3, "min_opacity": 0.0, "on_detect": [...] }
+#     "tail_width_coeff": 1.0, "color": "#FFFFFF", "lifetime": 0.3, "min_opacity": 0.0, "on_detect": [...] }
 #   { "type": "multi_release", "count": 4, "interval": 0.05,
 #     "chains": [ { ... }, { ... }, ... ] }
+#   { "type": "multi_release_claw", "interval": 0.1,
+#     "chains": [ { ... } ] }
+#   { "type": "multi_release_drill", "count": { "var": "drill_count" },
+#     "damage_formula": { "var": "drill_count", "add": 4 }, "interval": 0.05,
+#     "chains": [ { ... } ] }
+#   { "type": "ring_detect", "origin": "player", "target": "player", "min_radius": 0,
+#     "max_radius": 300, "time": 0.4, "line_width": 3, "color": "#FFFFFF", "on_detect": [...] }
 #   { "type": "fall", "t": 0.4, "max_offset_x": 30, "start_height_h": 120,
 #     "target": "random_enemy", "animation": "...", "on_land": [...] }
+#
+# 动态变量引用（用于 count / value 等数值字段）：
+#   { "var": "drill_count" }          读取 player.drill_count
+#   { "var": "drill_count", "add": 4 }  读取 player.drill_count + 4
+#   { "var": "orb_count" }            读取当前充能球数量
+#   普通整数值（如 4）不经过变量解析，直接使用
 #
 # origin/target 可选值：
 #   "player" / "enemy" / "parent"
@@ -34,6 +49,9 @@
 #   { "type": "gain_attack_energy", "value": 1 }
 #   { "type": "gain_skill_energy", "value": 1 }
 #   { "type": "channel_orb", "orb_id": "frost" }
+#   { "type": "evoke_all_orbs" }
+#   { "type": "spawn_glass_barrier", "origin": "player" }
+#   { "type": "spawn_moving_barrier", "origin": "player", "target": "enemy", "time": 0.8 }
 
 {
   "cards": [
@@ -123,6 +141,393 @@
           { "type": "channel_orb", "orb_id": "plasma" },
           { "type": "channel_orb", "orb_id": "plasma" },
           { "type": "channel_orb", "orb_id": "plasma" }
+        ]
+      },
+      "exhaust": false
+    },
+    {
+      "id": "claw",
+      "name": "CLAW",
+      "description": "CLAW_DESC",
+      "cost": 0,
+      "cover": "res://sprite/attack_card/claw.png",
+      "chain": {
+        "type": "multi_release_claw",
+        "interval": 0.1,
+        "chains": [
+          {
+            "type": "aoe_detect",
+            "shape": "circle",
+            "radius": 25,
+            "origin": "player",
+            "target": "enemy",
+            "offset": 15,
+            "animation": "res://sprite/claw.tres",
+            "lifetime": 0.15,
+            "on_detect": [
+              { "type": "deal_damage", "value": 2 },
+              { "type": "apply_buff", "name": "slow", "value": 1, "duration": 1 },
+              { "type": "knockback" }
+            ]
+          }
+        ]
+      },
+      "exhaust": false
+    },
+    {
+      "id": "momentum_strike",
+      "name": "MOMENTUM_STRIKE",
+      "description": "MOMENTUM_STRIKE_DESC",
+      "cost": 1,
+      "cover": "res://sprite/attack_card/momentum_strike.png",
+      "chain": {
+        "type": "aoe_detect",
+        "shape": "circle",
+        "radius": 30,
+        "origin": "player",
+        "target": "enemy",
+        "offset": 20,
+        "animation": "res://sprite/momentum_strike.tres",
+        "lifetime": 0.2,
+        "on_detect": [
+          { "type": "deal_damage", "value": 10 }
+        ],
+        "on_detect_once": [
+          { "type": "gain_attack_energy", "value": 2 }
+        ]
+      },
+      "exhaust": false
+    },
+    {
+      "id": "focused_strike",
+      "name": "FOCUSED_STRIKE",
+      "description": "FOCUSED_STRIKE_DESC",
+      "cost": 1,
+      "cover": "res://sprite/attack_card/focused_strike.png",
+      "chain": {
+        "type": "aoe_detect",
+        "shape": "circle",
+        "radius": 30,
+        "origin": "player",
+        "target": "enemy",
+        "offset": 20,
+        "animation": "res://sprite/focused_strike.tres",
+        "lifetime": 0.2,
+        "on_detect": [
+          { "type": "deal_damage", "value": 9 }
+        ],  
+        "on_detect_once": [
+          { "type": "apply_buff", "name": "focus", "value": 1, "duration": 5, "self_target": true }
+        ]
+      },
+      "exhaust": false
+    },
+    {
+      "id": "uproar",
+      "name": "UPROAR",
+      "description": "UPROAR_DESC",
+      "cost": 2,
+      "cover": "res://sprite/attack_card/uproar.png",
+      "chain": {
+        "type": "aoe_detect",
+        "shape": "circle",
+        "radius": 30,
+        "origin": "player",
+        "target": "enemy",
+        "offset": 20,
+        "animation": "res://sprite/uproar.tres",
+        "lifetime": 0.2,
+        "on_detect": [
+          { "type": "deal_damage", "value": 10 }
+        ],
+        "on_detect_once": [
+          { "type": "play_attack_from_draw", "value": 1 }
+        ]
+      },
+      "exhaust": false
+    },
+    {
+      "id": "ftl",
+      "name": "FTL",
+      "description": "FTL_DESC",
+      "cost": 1,
+      "cover": "res://sprite/attack_card/ftl.png",
+      "chain": {
+        "type": "aoe_detect",
+        "shape": "rect",
+        "width": 50,
+        "height": 30,
+        "origin": "player",
+        "target": "enemy",
+        "offset": 30,
+        "animation": "res://sprite/ftl.tres",
+        "lifetime": 0.2,
+        "on_detect": [
+          { "type": "deal_damage", "value": 5 },
+          { "type": "draw_attack_cards", "value": 1 }
+        ]
+      },
+      "exhaust": false
+    },
+    {
+      "id": "sunder",
+      "name": "SUNDER",
+      "description": "SUNDER_DESC",
+      "cost": 3,
+      "cover": "res://sprite/attack_card/sunder.png",
+      "chain": {
+        "type": "aoe_detect",
+        "shape": "circle",
+        "radius": 30,
+        "origin": "player",
+        "target": "enemy",
+        "offset": 20,
+        "animation": "res://sprite/sunder.tres",
+        "lifetime": 0.2,
+        "on_detect": [
+          { "type": "deal_damage", "value": 24 }
+        ],
+        "on_kill": [
+          { "type": "gain_attack_energy", "value": 3 }
+        ]
+      },
+      "exhaust": false
+    },
+    {
+      "id": "helix_drill",
+      "name": "HELIX_DRILL",
+      "description": "HELIX_DRILL_DESC",
+      "cost": 1,
+      "cover": "res://sprite/attack_card/helix_drill.png",
+      "chain": {
+        "type": "multi_release_drill",
+        "count": { "var": "drill_count" },
+        "damage_formula": { "var": "drill_count", "add": 4 },
+        "interval": 0.05,
+        "chains": [
+          {
+            "type": "aoe_detect",
+            "shape": "circle",
+            "radius": 25,
+            "origin": "player",
+            "target": "enemy",
+            "offset": 20,
+            "animation": "res://sprite/helix_drill.tres",
+            "lifetime": 0.15,
+            "on_detect": [
+              { "type": "deal_damage", "value": 0 }
+            ]
+          }
+        ]
+      },
+      "exhaust": false
+    },
+    {
+      "id": "beam_cell",
+      "name": "BEAM_CELL",
+      "description": "BEAM_CELL_DESC",
+      "cost": 1,
+      "cover": "res://sprite/attack_card/beam_cell.png",
+      "chain": {
+        "type": "beam_detect",
+        "origin": "player",
+        "target": "enemy",
+        "length": 300,
+        "width": 4,
+        "hit_width": 6,
+        "tail_width_coeff": 1.0,
+        "color": "#FFFFF0",
+        "lifetime": 0.3,
+        "min_opacity": 0.0,
+        "on_detect": [
+          { "type": "deal_damage", "value": 3 },
+          { "type": "apply_buff", "name": "vulnerable", "value": 1, "duration": 5 }
+        ]
+      },
+      "exhaust": false
+    },
+    {
+      "id": "compile_driver",
+      "name": "COMPILE_DRIVER",
+      "description": "COMPILE_DRIVER_DESC",
+      "cost": 1,
+      "cover": "res://sprite/attack_card/compile_driver.png",
+      "chain": {
+        "type": "beam_detect",
+        "origin": "player",
+        "target": "enemy",
+        "length": 300,
+        "width": 4,
+        "hit_width": 6,
+        "tail_width_coeff": 1.0,
+        "color": "#CCFF44",
+        "lifetime": 0.3,
+        "min_opacity": 0.0,
+        "on_detect": [
+          { "type": "deal_damage", "value": 6 },
+          {
+            "type": "multi_release",
+            "count": { "var": "orb_count" },
+            "interval": 0.05,
+            "chains": [
+              { "type": "draw_attack_cards", "value": 1 }
+            ]
+          }
+        ]
+      },
+      "exhaust": false
+    },
+    {
+      "id": "shatter",
+      "name": "SHATTER",
+      "description": "SHATTER_DESC",
+      "cost": 2,
+      "cover": "res://sprite/attack_card/shatter.png",
+      "chain": {
+        "type": "multi_release",
+        "count": 2,
+        "interval": 0,
+        "chains": [
+          {
+            "type": "ring_detect",
+            "origin": "player",
+            "target": "player",
+            "min_radius": 0,
+            "max_radius": 300,
+            "time": 0.4,
+            "line_width": 3,
+            "color": "#FFFFFF",
+            "on_detect": [
+              { "type": "deal_damage", "value": 11 }
+            ]
+          },
+          { "type": "evoke_all_orbs" }
+        ]
+      },
+      "exhaust": true
+    },
+    {
+      "id": "scrape",
+      "name": "SCRAPE",
+      "description": "SCRAPE_DESC",
+      "cost": 1,
+      "cover": "res://sprite/attack_card/scrape.png",
+      "chain": {
+        "type": "boomerang",
+        "origin": "player",
+        "target": "enemy",
+        "offset": 10,
+        "length": 150,
+        "time": 1,
+        "animation": "res://sprite/scrape.tres",
+        "on_detect": [
+          { "type": "deal_damage", "value": 7 },
+          { "type": "draw_attack_cards", "value": 1 }
+        ]
+      },
+      "exhaust": false
+    },
+    {
+      "id": "refract",
+      "name": "REFRACT",
+      "description": "REFRACT_DESC",
+      "cost": 2,
+      "cover": "res://sprite/attack_card/refract.png",
+      "chain": {
+        "type": "multi_release",
+        "count": 2,
+        "interval": 0.4,
+        "chains": [
+          {
+            "type": "multi_release",
+            "count": 3,
+            "interval": 0,
+            "chains": [
+              { "type": "spawn_moving_barrier", "origin": "player", "target": "enemy", "time": 0.8 },
+              { "type": "channel_orb", "orb_id": "glass" },
+              { "type": "channel_orb", "orb_id": "glass" }
+            ]
+          },
+          {
+            "type": "multi_release",
+            "count": 3,
+            "interval": 0.05,
+            "chains": [
+              {
+                "type": "beam_detect",
+                "origin": "player",
+                "target": "moving_barrier",
+                "length": 200,
+                "width": 8,
+                "hit_width": 8,
+                "tail_width_coeff": 1.0,
+                "color": "#AADDFF",
+                "lifetime": 0.3,
+                "min_opacity": 0.0,
+                "on_detect": [
+                  { "type": "deal_damage", "value": 9 }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "exhaust": false
+    },
+    {
+      "id": "ball_lightning",
+      "name": "BALL_LIGHTNING",
+      "description": "BALL_LIGHTNING_DESC",
+      "cost": 1,
+      "cover": "res://sprite/attack_card/ball_lightning.png",
+      "chain": {
+        "type": "piercing_projectile",
+        "origin": "player",
+        "target": "enemy",
+        "offset": 10,
+        "speed": 200,
+        "max_range": 400,
+        "radius": 8,
+        "animation": "res://sprite/ball_lightning.tres",
+        "on_hit": [
+          {
+            "type": "aoe_detect",
+            "shape": "circle",
+            "radius": 16,
+            "origin": "parent",
+            "target": "enemy",
+            "anchor_offset": 16,
+            "rotation": 0,
+            "element": "lightning",
+            "animation": "res://sprite/lightning_attack.tres",
+            "lifetime": 0.2,
+            "on_detect": [
+              { "type": "deal_damage", "value": 1 },
+              { "type": "channel_orb", "orb_id": "lightning" }
+            ]
+          }
+        ]
+      },
+      "exhaust": false
+    },
+    {
+      "id": "null",
+      "name": "NULL",
+      "description": "NULL_DESC",
+      "cost": 1,
+      "cover": "res://sprite/attack_card/null.png",
+      "chain": {
+        "type": "aoe_detect",
+        "shape": "circle",
+        "radius": 30,
+        "origin": "player",
+        "target": "enemy",
+        "offset": 200,
+        "animation": "res://sprite/dark_orb_attack.tres",
+        "lifetime": 0.2,
+        "on_detect": [
+          { "type": "deal_damage", "value": 12 },
+          { "type": "channel_orb", "orb_id": "dark" }
         ]
       },
       "exhaust": false

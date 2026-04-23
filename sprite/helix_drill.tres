@@ -1,0 +1,32 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://byvo4snlha4qj"]
+
+[ext_resource type="Texture2D" uid="uid://c7hwyibbmtrid" path="res://sprite/helix_drill.png" id="1_t8454"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o4e2g"]
+atlas = ExtResource("1_t8454")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_db4qn"]
+atlas = ExtResource("1_t8454")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b5ke6"]
+atlas = ExtResource("1_t8454")
+region = Rect2(64, 0, 32, 32)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o4e2g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_db4qn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b5ke6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 30.0
+}]

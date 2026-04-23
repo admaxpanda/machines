@@ -29,6 +29,7 @@ func reset_for_new_battle() -> void:
 	hand.clear()
 	discard_pile.clear()
 	exhaust_pile.clear()
+	draw_pile = draw_pile.filter(func(c: CardData) -> bool: return not c.temporary)
 	energy = 0
 	energy_changed.emit(energy)
 	hand_changed.emit()
@@ -61,7 +62,7 @@ func _shuffle_discard_into_draw() -> void:
 	discard_pile.clear()
 	draw_pile.shuffle()
 
-## 执行一张卡牌：扣能量 → 移手牌 → 执行链 → 弃牌/消耗
+## 执行一张卡牌：扣能量 → 移手牌 → 执行链 → 弃牌/消耗 → 子程序检查
 func _play_card(card: CardData) -> void:
 	energy -= card.cost
 	energy_changed.emit(energy)
@@ -81,6 +82,27 @@ func _play_card(card: CardData) -> void:
 	CardResolver.play(card, context)
 	for i in extra:
 		CardResolver.play(card, context)
+	_check_subroutine(card, context)
+
+## 子程序：20% 概率再次触发卡牌效果 + 退还 1 能量 + 无人机视觉
+func _check_subroutine(card: CardData, context: Dictionary) -> void:
+	if not source or not "abilities" in source:
+		return
+	var has_sub := false
+	for a in source.abilities:
+		if a.id == &"subroutine":
+			has_sub = true
+			break
+	if not has_sub:
+		return
+	if randf() >= 0.20:
+		return
+	CardResolver.play(card, context)
+	energy += 1
+	energy_changed.emit(energy)
+	var managers := get_tree().get_nodes_in_group(&"drone_manager")
+	if managers.size() > 0:
+		managers[0].play_all_trigger_visuals()
 
 ## 子类可 override：返回 true 则卡牌回到手牌末尾而非弃牌堆
 func _should_return_to_hand(_card: CardData) -> bool:

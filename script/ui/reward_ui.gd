@@ -10,6 +10,7 @@ var _cards_container: HBoxContainer
 var _ability_label: Label
 var _skip_button: Button
 var _is_card_mode: bool = true
+var _draft_manager: Node = null
 
 const OVERLAY_COLOR := Color(0.0, 0.0, 0.0, 0.6)
 const PANEL_COLOR := Color(0.1, 0.1, 0.15, 0.95)
@@ -82,6 +83,7 @@ func _build_ui() -> void:
 
 func show_card_choices(cards: Array) -> void:
 	_is_card_mode = true
+	_skip_button.visible = true
 	_title_label.text = "选择一张卡牌"
 	_ability_label.visible = false
 	_cards_container.visible = true
@@ -96,6 +98,27 @@ func show_card_choices(cards: Array) -> void:
 			Locale.get_text(card.card_name),
 			Locale.get_text(card.description),
 			_on_card_clicked.bind(card)
+		))
+
+	visible = true
+
+func show_draft_choices(cards: Array, current: int, total: int) -> void:
+	_is_card_mode = true
+	_skip_button.visible = false
+	_title_label.text = Locale.get_text("DRAFT_TITLE") % [current, total]
+	_ability_label.visible = false
+	_cards_container.visible = true
+
+	for child in _cards_container.get_children():
+		_cards_container.remove_child(child)
+		child.queue_free()
+
+	for card in cards:
+		_cards_container.add_child(_make_reward_slot(
+			load(card.cover) if card.cover != "" else null,
+			Locale.get_text(card.card_name),
+			Locale.get_text(card.description),
+			_on_draft_card_clicked.bind(card)
 		))
 
 	visible = true
@@ -179,6 +202,10 @@ func dismiss() -> void:
 func _on_card_clicked(card) -> void:
 	if _reward_manager:
 		_reward_manager.on_card_selected(card)
+
+func _on_draft_card_clicked(card) -> void:
+	if _draft_manager:
+		_draft_manager.on_card_selected(card)
 
 func _on_ability_clicked(ability) -> void:
 	if _reward_manager:

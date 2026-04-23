@@ -29,6 +29,7 @@ var _phase_label: Label
 var _skill_energy_label: Label
 var _skill_progress_fg: ColorRect
 
+var _buff_panel: VBoxContainer
 var _skill_card_engine: Node
 var _skill_slots: Array = []      ## Array[Control]
 var _skill_bar: HBoxContainer
@@ -48,6 +49,8 @@ func _ready() -> void:
 		_player.health_changed.connect(_on_health_changed)
 		_player.xp_changed.connect(_on_xp_changed)
 		_player.leveled_up.connect(_on_level_up)
+		if _player.buff_container:
+			_player.buff_container.buffs_changed.connect(_refresh_buffs)
 	_battle_manager = get_node_or_null(battle_manager_path)
 	if _battle_manager:
 		_battle_manager.state_changed.connect(_on_state_changed)
@@ -64,6 +67,7 @@ func _process(_delta: float) -> void:
 
 func _build_ui() -> void:
 	_build_top_left()
+	_build_buff_panel()
 	_build_skill_bar()
 
 func _build_top_left() -> void:
@@ -102,6 +106,39 @@ func _build_top_left() -> void:
 	xp_bar.add_child(xp_bg)
 	_xp_fg = _make_fg(XP_COLOR, XP_BAR_H)
 	xp_bar.add_child(_xp_fg)
+
+func _build_buff_panel() -> void:
+	_buff_panel = VBoxContainer.new()
+	_buff_panel.set_anchors_preset(Control.PRESET_TOP_LEFT)
+	_buff_panel.offset_left = 10.0
+	_buff_panel.offset_top = 110.0
+	_buff_panel.add_theme_constant_override("separation", 2)
+	_buff_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_buff_panel)
+
+func _refresh_buffs() -> void:
+	if not _buff_panel or not _player or not _player.buff_container:
+		return
+	for child in _buff_panel.get_children():
+		child.queue_free()
+	var buffs: Array = _player.buff_container._buffs
+	# 合并同 id 的 buff，求和 stacks
+	var merged: Dictionary = {}
+	for b in buffs:
+		var id: StringName = b.data.id
+		if not merged.has(id):
+			merged[id] = { "name": b.data.buff_name, "stacks": 0 }
+		merged[id]["stacks"] += b.stacks
+	for id in merged:
+		var info = merged[id]
+		var label := Label.new()
+		label.add_theme_font_size_override("font_size", 10)
+		label.add_theme_color_override("font_color", Color.WHITE)
+		label.add_theme_color_override("font_outline_color", Color.BLACK)
+		label.add_theme_constant_override("outline_size", 1)
+		label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		label.text = "%s %d" % [info["name"], info["stacks"]]
+		_buff_panel.add_child(label)
 
 func _build_skill_bar() -> void:
 	_skill_bar = HBoxContainer.new()

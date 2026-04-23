@@ -90,13 +90,34 @@
       "rarity": "common",
       "description": "SPINNER_DESC",
       "icon": "res://sprite/ability_card/spinner.png"
-    }
+    },
     {
       "id": "hailstorm",
       "name": "HAILSTORM",
       "rarity": "uncommon",
       "description": "HAILSTORM_DESC",
       "icon": "res://sprite/ability_card/hailstorm.png"
+    },
+    {
+      "id": "thunder",
+      "name": "THUNDER",
+      "rarity": "rare",
+      "description": "THUNDER_DESC",
+      "icon": "res://sprite/ability_card/thunder.png"
+    },
+    {
+      "id": "consuming_shadow",
+      "name": "CONSUMING_SHADOW",
+      "rarity": "uncommon",
+      "description": "CONSUMING_SHADOW_DESC",
+      "icon": "res://sprite/ability_card/consuming_shadow.png"
+    },
+    {
+      "id": "subroutine",
+      "name": "SUBROUTINE",
+      "rarity": "rare",
+      "description": "SUBROUTINE_DESC",
+      "icon": "res://sprite/ability_card/subroutine.png"
     }
   ]
 }

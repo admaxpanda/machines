@@ -11,6 +11,10 @@ static func load_attack_cards() -> Dictionary:
 static func load_skill_cards() -> Dictionary:
 	return _load_cards_from("res://data/card/skill_cards.json")
 
+## 加载所有状态卡数据
+static func load_status_cards() -> Dictionary:
+	return _load_cards_from("res://data/card/status_cards.json")
+
 ## 根据卡组 JSON 构建攻击卡组实例数组
 static func build_attack_deck() -> Array:
 	return _build_deck(load_attack_cards(), "attack_deck")

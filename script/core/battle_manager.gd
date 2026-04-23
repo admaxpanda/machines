@@ -41,6 +41,8 @@ func _start_level(index: int) -> void:
 	_state = State.RUNNING
 	_alive_enemies = 0
 	_reset_player_state()
+	_clear_glass_barriers()
+	_clear_lightning_rod_barriers()
 	_channel_starting_orb()
 	var level: LevelData = _levels[index]
 	_waves_running = level.waves.size()
@@ -55,6 +57,9 @@ func on_level_cleared() -> void:
 		return
 	_clear_orbs()
 	_reset_card_engines()
+	var _ocl_player := get_tree().get_first_node_in_group(&"player") as CharacterBody2D
+	if _ocl_player and _ocl_player.has_method("cancel_invincibility"):
+		_ocl_player.cancel_invincibility()
 	_state = State.REWARD
 	state_changed.emit("奖励")
 	if _card_engine:
@@ -121,6 +126,7 @@ func _spawn_enemy(enemy_id: StringName, wave_type: StringName = &"normal") -> vo
 ## 敌人死亡回调
 func _on_enemy_died(enemy: CharacterBody2D) -> void:
 	_alive_enemies -= 1
+	_trigger_consuming_shadow_kill()
 	if enemy.wave_type == &"boss":
 		var player := get_tree().get_first_node_in_group(&"player") as CharacterBody2D
 		if player and player.has_method("heal_boss_reward"):
@@ -129,11 +135,44 @@ func _on_enemy_died(enemy: CharacterBody2D) -> void:
 		return
 	_check_level_cleared()
 
+## 吞噬暗影：击杀敌人时触发所有黑暗充能球被动
+func _trigger_consuming_shadow_kill() -> void:
+	var player := get_tree().get_first_node_in_group(&"player")
+	if not player or not "abilities" in player:
+		return
+	var has_shadow := false
+	for a in player.abilities:
+		if a.id == &"consuming_shadow":
+			has_shadow = true
+			break
+	if not has_shadow:
+		return
+	var managers := get_tree().get_nodes_in_group(&"orb_manager")
+	if managers.is_empty():
+		return
+	var orb_mgr = managers[0]
+	for i in orb_mgr.slots.size():
+		if i >= orb_mgr.slots.size():
+			break
+		if orb_mgr.slots[i].data.id == &"dark":
+			orb_mgr._trigger_passive(orb_mgr.slots[i], orb_mgr._visuals[i].global_position if i < orb_mgr._visuals.size() else Vector2.ZERO)
+	orb_mgr._refresh_labels()
+
 ## 清空所有充能球
 func _clear_orbs() -> void:
 	var managers := get_tree().get_nodes_in_group(&"orb_manager")
 	if managers.size() > 0:
 		managers[0].clear_all()
+
+## 清除所有玻璃障碍
+func _clear_glass_barriers() -> void:
+	for gb in get_tree().get_nodes_in_group(&"glass_barrier"):
+		gb.queue_free()
+
+## 清除所有引雷针障碍
+func _clear_lightning_rod_barriers() -> void:
+	for lrb in get_tree().get_nodes_in_group(&"lightning_rod_barrier"):
+		lrb.queue_free()
 
 ## 重置 buffer 免伤次数
 func _reset_buffer_charges(player: CharacterBody2D) -> void:
@@ -185,6 +224,10 @@ func _reset_player_state() -> void:
 
 	# 重置 buffer 免伤次数
 	_reset_buffer_charges(player)
+	player.claw_times = 1
+	player.lightning_channeled = 0
+	if player.has_method("cancel_invincibility"):
+		player.cancel_invincibility()
 
 ## 重置卡牌引擎：所有牌归位，能量清零
 func _reset_card_engines() -> void:

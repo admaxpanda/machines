@@ -1,0 +1,39 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://ci14gmlixhq8e"]
+
+[ext_resource type="Texture2D" uid="uid://j0wtlkr64pu4" path="res://sprite/lightning_rod.png" id="1_vbeu5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4heh1"]
+atlas = ExtResource("1_vbeu5")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dt7rj"]
+atlas = ExtResource("1_vbeu5")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6qt4k"]
+atlas = ExtResource("1_vbeu5")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h27w2"]
+atlas = ExtResource("1_vbeu5")
+region = Rect2(192, 0, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4heh1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dt7rj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6qt4k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h27w2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]

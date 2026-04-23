@@ -1,0 +1,45 @@
+{
+  "cards": [
+    {
+      "id": "wound",
+      "name": "WOUND",
+      "description": "WOUND_DESC",
+      "cost": 0,
+      "cover": "res://sprite/status_card/wound.png",
+      "chain": {},
+      "unplayable": true
+    },
+    {
+      "id": "burn",
+      "name": "BURN",
+      "description": "BURN_DESC",
+      "cost": 0,
+      "cover": "res://sprite/status_card/burn.png",
+      "chain": {
+        "type": "deal_damage",
+        "value": 2,
+        "self_target": true
+      },
+      "exhaust": true
+    },
+    {
+      "id": "dizzy",
+      "name": "DIZZY",
+      "description": "DIZZY_DESC",
+      "cost": 0,
+      "cover": "res://sprite/status_card/dizzy.png",
+      "chain": {},
+      "unplayable": true,
+      "ethereal": true
+    },
+    {
+      "id": "void",
+      "name": "VOID",
+      "description": "VOID_DESC",
+      "cost": 1,
+      "cover": "res://sprite/status_card/void.png",
+      "chain": {},
+      "exhaust": true
+    }
+  ]
+}

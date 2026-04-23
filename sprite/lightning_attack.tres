@@ -2,29 +2,32 @@
 
 [ext_resource type="Texture2D" uid="uid://coxq2q42n8cu6" path="res://sprite/lightning_orb_attack.png" id="1_08pkk"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_08pkk"]
+atlas = ExtResource("1_08pkk")
+region = Rect2(0, 0, 128, 128)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_wb03c"]
 atlas = ExtResource("1_08pkk")
-region = Rect2(0, 0, 32, 96)
+region = Rect2(128, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_87js3"]
 atlas = ExtResource("1_08pkk")
-region = Rect2(32, 0, 32, 96)
+region = Rect2(256, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b5vbr"]
 atlas = ExtResource("1_08pkk")
-region = Rect2(64, 0, 32, 96)
+region = Rect2(384, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3w8w0"]
 atlas = ExtResource("1_08pkk")
-region = Rect2(96, 0, 32, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ubeyh"]
-atlas = ExtResource("1_08pkk")
-region = Rect2(128, 0, 32, 96)
+region = Rect2(512, 0, 128, 128)
 
 [resource]
 animations = [{
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_08pkk")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wb03c")
 }, {
@@ -36,11 +39,8 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3w8w0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ubeyh")
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 10.0
 }]

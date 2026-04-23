@@ -14,7 +14,11 @@
         "origin": "random_enemy",
         "target": "player",
         "offset": 0,
+        "anchor_offset": 16,
+        "element": "lightning",
+        "animation": "res://sprite/lightning_attack.tres",
         "lifetime": 0.2,
+        "rotation": 0,
         "on_detect": [
           {
             "type": "deal_damage",
@@ -23,17 +27,28 @@
         ]
       },
       "evoke_chain": {
-        "type": "aoe_detect",
-        "shape": "circle",
-        "radius": 30,
-        "origin": "random_enemy",
-        "target": "player",
-        "offset": 0,
-        "lifetime": 0.2,
-        "on_detect": [
+        "type": "multi_release",
+        "count": 1,
+        "interval": 0.05,
+        "chains": [
           {
-            "type": "deal_damage",
-            "value": 8
+            "type": "aoe_detect",
+            "shape": "circle",
+            "radius": 30,
+            "origin": "random_enemy",
+            "target": "player",
+            "offset": 0,
+            "anchor_offset": 16,
+            "element": "lightning",
+            "animation": "res://sprite/lightning_attack.tres",
+            "lifetime": 0.2,
+            "rotation": 0,
+            "on_detect": [
+              {
+                "type": "deal_damage",
+                "value": 8
+              }
+            ]
           }
         ]
       }
@@ -70,6 +85,8 @@
         "origin": "lowest_hp_enemy",
         "target": "player",
         "offset": 0,
+        "animation": "res://sprite/dark_orb_attack.tres",
+        "rotation": 0,
         "lifetime": 0.2,
         "on_detect": [
           {
@@ -91,7 +108,7 @@
       "passive_chain": {
         "type": "multi_release",
         "count": 1,
-        "interval": 0,
+        "interval": 0.1,
         "chains": [
           {
             "type": "beam_detect",

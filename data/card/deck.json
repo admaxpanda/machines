@@ -3,13 +3,13 @@
     { "card_id": "strike" },
     { "card_id": "strike" },
     { "card_id": "strike" },
-    { "card_id": "strike" },
     { "card_id": "strike" }
   ],
   "skill_deck": [
     { "card_id": "defend" },
     { "card_id": "defend" },
-    { "card_id": "zap" },
+    { "card_id": "defend" },
+    { "card_id": "defend" },
     { "card_id": "zap" },
     { "card_id": "dualcast" }
   ],

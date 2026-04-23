@@ -11,7 +11,7 @@
       "id": "focus",
       "name": "集中",
       "duration_type": "turns",
-      "stacking": "extend",
+      "stacking": "shield",
       "atomic": true
     },
     {
@@ -46,6 +46,48 @@
       "id": "biased_cognition",
       "name": "偏差认知",
       "duration_type": "permanent",
+      "stacking": "intensity",
+      "atomic": true
+    },
+    {
+      "id": "slow",
+      "name": "减速",
+      "duration_type": "turns",
+      "stacking": "intensity",
+      "atomic": true
+    },
+    {
+      "id": "fusion",
+      "name": "聚变",
+      "duration_type": "turns",
+      "stacking": "intensity",
+      "atomic": true
+    },
+    {
+      "id": "chaos",
+      "name": "混沌",
+      "duration_type": "turns",
+      "stacking": "intensity",
+      "atomic": true
+    },
+    {
+      "id": "extra_draw",
+      "name": "额外抽牌",
+      "duration_type": "turns",
+      "stacking": "shield",
+      "atomic": true
+    },
+    {
+      "id": "extra_attack_energy",
+      "name": "额外攻击能量",
+      "duration_type": "turns",
+      "stacking": "shield",
+      "atomic": true
+    },
+    {
+      "id": "glass_channel",
+      "name": "玻璃充能",
+      "duration_type": "turns",
       "stacking": "intensity",
       "atomic": true
     }

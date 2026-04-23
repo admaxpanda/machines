@@ -1,0 +1,39 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://txcakgdfusj"]
+
+[ext_resource type="Texture2D" uid="uid://dw51w8swh1yel" path="res://sprite/go_for_the_eyes.png" id="1_6i5hb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4vk81"]
+atlas = ExtResource("1_6i5hb")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vvyxo"]
+atlas = ExtResource("1_6i5hb")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_38wg0"]
+atlas = ExtResource("1_6i5hb")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_28hak"]
+atlas = ExtResource("1_6i5hb")
+region = Rect2(96, 0, 32, 32)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4vk81")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vvyxo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_38wg0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_28hak")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]

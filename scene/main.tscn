@@ -5,13 +5,12 @@
 [ext_resource type="Script" uid="uid://dstvg70i6nk4p" path="res://script/core/battle_manager.gd" id="3"]
 [ext_resource type="Script" uid="uid://dce21cjnm01gj" path="res://script/core/main.gd" id="5"]
 [ext_resource type="Script" uid="uid://w31183ekimgx" path="res://script/test/test.gd" id="6"]
-[ext_resource type="Script" uid="uid://iwpcb5cd3fn3" path="res://script/core/card_engine.gd" id="7"]
-[ext_resource type="Script" path="res://script/core/attack_card_engine.gd" id="14"]
 [ext_resource type="PackedScene" path="res://scene/ui/hand_ui.tscn" id="9"]
 [ext_resource type="Script" uid="uid://cx8qt84fllqux" path="res://script/core/camera_follow.gd" id="10"]
 [ext_resource type="PackedScene" path="res://scene/ui/hud.tscn" id="11"]
 [ext_resource type="Script" uid="uid://mplf3codgtmy" path="res://script/core/reward_manager.gd" id="12"]
 [ext_resource type="PackedScene" path="res://scene/ui/reward_ui.tscn" id="13"]
+[ext_resource type="Script" uid="uid://b5di73sck2t1p" path="res://script/core/attack_card_engine.gd" id="14"]
 
 [node name="Main" type="Node2D" unique_id=1749692696]
 script = ExtResource("5")

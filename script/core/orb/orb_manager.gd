@@ -212,6 +212,11 @@ func _evoke_slot(slot: OrbSlot, orb_pos: Vector2 = Vector2.ZERO) -> void:
 			print("[Orb] %s evoke: glass ×%d dmg" % [data.orb_name, damage])
 		else:
 			_apply_focus_to_chain(chain, data.evoke_focus_bonus * focus)
+		# thunder: lightning evoke extra times
+		if chain.get("type") == &"multi_release":
+			var thunder_count := _count_player_ability(&"thunder")
+			if thunder_count > 0:
+				chain["count"] = int(chain.get("count", 1)) + thunder_count
 		Attack.execute(chain, player, {"source": player, "parent_position": orb_pos})
 
 	print("[Orb] evoke %s: %s" % [data.orb_name, data.evoke_desc])
@@ -348,11 +353,14 @@ func _refresh_labels() -> void:
 		var text := ""
 		match data.id:
 			&"lightning":
+				var base_dmg: int = 0
 				var on_detect: Array = data.passive_chain.get("on_detect", [])
 				if not on_detect.is_empty():
-					text = str(int(on_detect[0].get("value", 0)))
+					base_dmg = int(on_detect[0].get("value", 0))
+				text = str(base_dmg + data.passive_focus_bonus * _get_focus())
 			&"frost":
-				text = str(int(data.passive_shield.get("amount", 0)))
+				var frost_amt: int = int(data.passive_shield.get("amount", 0))
+				text = str(frost_amt + data.passive_focus_bonus * _get_focus())
 			&"dark":
 				text = str(int(slots[i].accumulated))
 			&"glass":

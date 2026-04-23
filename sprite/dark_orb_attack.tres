@@ -1,0 +1,46 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://ll2aa1in7odk"]
+
+[ext_resource type="Texture2D" uid="uid://doe40c7o6a4ks" path="res://sprite/dark_orb_attack.png" id="1_k21yx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vx6f6"]
+atlas = ExtResource("1_k21yx")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yl57v"]
+atlas = ExtResource("1_k21yx")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nveis"]
+atlas = ExtResource("1_k21yx")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qtsx5"]
+atlas = ExtResource("1_k21yx")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wpcug"]
+atlas = ExtResource("1_k21yx")
+region = Rect2(256, 0, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vx6f6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yl57v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nveis")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qtsx5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wpcug")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]

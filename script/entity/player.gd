@@ -14,6 +14,15 @@ var xp_to_next: int = 5
 var buff_container: Node   ## BuffContainer 引用
 var abilities: Array = []  ## Array[AbilityCardData] 已装备的被动能力
 var buffer_charges: int = 0  ## buffer 能力免伤次数
+var claw_times: int = 1       ## 爪击连击次数，关卡切换时重置
+var drill_count: int = 0      ## 上回合打出的攻击牌数，供螺旋钻击使用
+var lightning_channeled: int = 0  ## 本场战斗中召唤的闪电充能球次数
+var signal_boost_stacks: int = 0  ## 信号增强叠加层数
+var genetic_algorithm_uses: int = 0  ## 遗传算法整局使用次数
+var extra_ability_rewards: int = 0  ## 额外能力卡奖励次数
+var invincible: bool = false         ## 无敌状态
+var _invincible_version: int = 0     ## 无敌计时器版本号，用于取消旧定时器
+var _dashing: bool = false           ## 冲刺中
 
 @onready var _sprite: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -35,7 +44,14 @@ func _ready() -> void:
 	buff_container.buffs_changed.connect(_update_shield_display)
 	_create_shield_ui()
 
+	var drone_manager := Node2D.new()
+	var drone_script: GDScript = load("res://script/core/drone_manager.gd")
+	drone_manager.set_script(drone_script)
+	add_child(drone_manager)
+
 func take_damage(amount: int) -> void:
+	if invincible:
+		return
 	if buffer_charges > 0:
 		buffer_charges -= 1
 		return
@@ -73,6 +89,10 @@ func add_ability(ability: AbilityCardData) -> void:
 				managers[0].max_slots = maxi(managers[0].max_slots - 1, 1)
 			buff_container.add_buff(&"strength", 2, -1)
 			buff_container.add_buff(&"dexterity", 2, -1)
+		&"subroutine":
+			var drone_managers := get_tree().get_nodes_in_group(&"drone_manager")
+			if drone_managers.size() > 0:
+				drone_managers[0].spawn_drone()
 	print("[Ability] 装备 %s" % ability.ability_name)
 
 func add_xp(amount: int) -> void:
@@ -86,6 +106,8 @@ func add_xp(amount: int) -> void:
 		xp_changed.emit(xp, xp_to_next)
 
 func _physics_process(_delta: float) -> void:
+	if _dashing:
+		return
 	var direction := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	velocity = direction * speed
 	move_and_slide()
@@ -137,3 +159,75 @@ func _update_shield_display() -> void:
 	else:
 		_shield_icon.visible = false
 		_shield_label.visible = false
+
+func start_invincibility(duration: float) -> void:
+	invincible = true
+	_invincible_version += 1
+	var version := _invincible_version
+	var period := 0.20
+	var flash_count := ceili(duration / period)
+	for i in flash_count:
+		var t1 := period * float(i) + 0.15
+		if t1 >= duration:
+			break
+		var t2 := t1 + 0.05
+		get_tree().create_timer(t1).timeout.connect(func():
+			if is_instance_valid(self) and _invincible_version == version:
+				_sprite.modulate = Color(8, 8, 8, 1)
+		)
+		get_tree().create_timer(t2).timeout.connect(func():
+			if is_instance_valid(self) and _invincible_version == version:
+				_sprite.modulate = Color.WHITE
+		)
+	get_tree().create_timer(duration).timeout.connect(func():
+		if is_instance_valid(self) and _invincible_version == version:
+			invincible = false
+			_sprite.modulate = Color.WHITE
+	)
+
+func cancel_invincibility() -> void:
+	_invincible_version += 1
+	invincible = false
+	_sprite.modulate = Color.WHITE
+
+func perform_dash(distance: float, duration: float) -> void:
+	if velocity.length() < 1.0 or _dashing:
+		return
+	var dash_dir := velocity.normalized()
+	var start_pos := global_position
+	var target_pos := start_pos + dash_dir * distance
+	_dashing = true
+	_invincible_version += 1
+	var version := _invincible_version
+	invincible = true
+	var afterimages: Array = []
+	var elapsed := 0.0
+	while elapsed < duration:
+		var ai := AnimatedSprite2D.new()
+		ai.sprite_frames = _sprite.sprite_frames
+		ai.animation = _sprite.animation
+		ai.frame = _sprite.frame
+		ai.flip_h = _sprite.flip_h
+		ai.global_position = global_position
+		ai.z_index = _sprite.z_index - 1
+		get_tree().current_scene.add_child(ai)
+		for existing in afterimages:
+			existing.modulate.a *= 0.75
+		afterimages.append(ai)
+		await get_tree().process_frame
+		elapsed += get_process_delta_time()
+		var t := minf(elapsed / duration, 1.0)
+		global_position = start_pos.lerp(target_pos, t)
+		if _invincible_version != version or not is_instance_valid(self):
+			for img in afterimages:
+				if is_instance_valid(img):
+					img.queue_free()
+			_dashing = false
+			return
+	global_position = target_pos
+	if _invincible_version == version:
+		invincible = false
+	_dashing = false
+	for img in afterimages:
+		if is_instance_valid(img):
+			img.queue_free()

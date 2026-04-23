@@ -79,7 +79,10 @@ func _physics_process(delta: float) -> void:
 		return
 	_damage_cooldown = maxf(_damage_cooldown - delta, 0.0)
 	var direction := (_player.global_position - global_position).normalized()
-	velocity = direction * speed
+	var spd := speed
+	if buff_container and buff_container.has_buff(&"slow"):
+		spd *= 0.5
+	velocity = direction * spd
 	move_and_slide()
 	if _damage_cooldown <= 0.0:
 		for i in get_slide_collision_count():

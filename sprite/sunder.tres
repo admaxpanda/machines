@@ -1,0 +1,39 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://spn5kdlrk3yr"]
+
+[ext_resource type="Texture2D" uid="uid://djeumkenvlihb" path="res://sprite/sunder.png" id="1_hhf0y"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2hst5"]
+atlas = ExtResource("1_hhf0y")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mg5ry"]
+atlas = ExtResource("1_hhf0y")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eq0a8"]
+atlas = ExtResource("1_hhf0y")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_03at5"]
+atlas = ExtResource("1_hhf0y")
+region = Rect2(96, 0, 32, 32)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2hst5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mg5ry")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eq0a8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_03at5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]

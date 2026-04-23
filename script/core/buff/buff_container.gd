@@ -91,7 +91,7 @@ func tick_turn() -> void:
 		if b.data.duration_type == BuffData.DurationType.PERMANENT:
 			continue
 		b.turns_remaining -= 1
-		if b.turns_remaining <= 0:
+		if b.turns_remaining == 0:
 			to_remove.append(i)
 	if to_remove.is_empty():
 		return

@@ -29,23 +29,37 @@ func start_rewards(card_engine: Node) -> void:
 			if a.id == &"creative_ai":
 				_pending_ability_rewards += 1
 				break
+	# 白噪音：额外能力卡奖励
+	if _player and "extra_ability_rewards" in _player and _player.extra_ability_rewards > 0:
+		_pending_ability_rewards += _player.extra_ability_rewards
+		_player.extra_ability_rewards = 0
 	_phase = Phase.CARD_REWARD
 	_show_card_reward()
 
-## 从全池抽 3 张卡展示
+## 从全池抽 3 张卡展示（攻击卡 + 技能卡，排除基础卡）
 func _show_card_reward() -> void:
-	var card_db := CardLoader.load_attack_cards()
+	var excluded: Dictionary = {&"strike": true, &"defend": true, &"zap": true, &"dualcast": true}
 	var pool: Array = []
-	for id in card_db:
-		if id != &"strike":
-			pool.append(card_db[id])
+	var attack_db := CardLoader.load_attack_cards()
+	var skill_db := CardLoader.load_skill_cards()
+	for id in attack_db:
+		if not excluded.has(id):
+			pool.append(attack_db[id])
+	for id in skill_db:
+		if not excluded.has(id):
+			pool.append(skill_db[id])
 	pool.shuffle()
 	var choices := pool.slice(0, mini(3, pool.size()))
 	_reward_ui.show_card_choices(choices)
 
-## 玩家选择了一张卡
+## 玩家选择了一张卡（攻击卡→攻击引擎，技能卡→技能引擎）
 func on_card_selected(card) -> void:
-	_card_engine.add_card(card)
+	if CardLoader.load_attack_cards().has(card.id):
+		_card_engine.add_card(card)
+	else:
+		var skill_engines := get_tree().get_nodes_in_group(&"skill_card_engine")
+		if skill_engines.size() > 0:
+			skill_engines[0].add_card(card)
 	_reward_ui.dismiss()
 	_proceed_to_ability_rewards()
 
@@ -71,7 +85,7 @@ func _show_next_ability_reward() -> void:
 			equipped_ids[a.id] = true
 	var pool: Array = []
 	for id in ability_db:
-		if not equipped_ids.has(id):
+		if not equipped_ids.has(id) or id == &"subroutine":
 			pool.append(ability_db[id])
 	pool.shuffle()
 	var choices := pool.slice(0, mini(3, pool.size()))
@@ -91,6 +105,11 @@ func on_ability_skipped() -> void:
 func on_ability_selected(ability: AbilityCardData) -> void:
 	if _player and _player.has_method("add_ability"):
 		_player.add_ability(ability)
+	# 信号增强：额外获得相同能力卡
+	if _player and "signal_boost_stacks" in _player and _player.signal_boost_stacks > 0:
+		for _sb_i in _player.signal_boost_stacks:
+			_player.add_ability(ability)
+		_player.signal_boost_stacks = 0
 	_pending_ability_rewards -= 1
 	_reward_ui.dismiss()
 	_show_next_ability_reward()
