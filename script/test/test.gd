@@ -16,7 +16,7 @@ func _input(event: InputEvent) -> void:
 				"interval": 0,
 				"chains": [
 					{ "type": "grant_invincible", "duration": 1.0 },
-					{ "type": "add_card_to_draw_pile", "card_id": "dizzy", "pool": "status", "engine": "attack" }
+					{ "type": "add_card_to_draw_pile", "card_id": "dazed", "pool": "status", "engine": "attack" }
 				]
 			}
 			Attack.execute(chain, player, context)

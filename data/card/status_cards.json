@@ -23,11 +23,11 @@
       "exhaust": true
     },
     {
-      "id": "dizzy",
-      "name": "DIZZY",
-      "description": "DIZZY_DESC",
+      "id": "dazed",
+      "name": "DAZED",
+      "description": "DAZED_DESC",
       "cost": 0,
-      "cover": "res://sprite/status_card/dizzy.png",
+      "cover": "res://sprite/status_card/dazed.png",
       "chain": {},
       "unplayable": true,
       "ethereal": true
