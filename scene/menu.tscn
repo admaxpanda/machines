@@ -4,6 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://cyhpagf5nwnaf" path="res://sprite/background.png" id="2_1qlln"]
 [ext_resource type="Texture2D" uid="uid://b8pvy2wdqtoew" path="res://sprite/title_zh.png" id="3_1qlln"]
 [ext_resource type="Texture2D" uid="uid://bedt7rtrqxed6" path="res://sprite/changelanguage.png" id="7_1qlln"]
+[ext_resource type="Texture2D" uid="uid://d0popoxgr60px" path="res://sprite/settings.png" id="8"]
+[ext_resource type="PackedScene" uid="uid://dhvq2go1omsl1" path="res://scene/ui/settings.tscn" id="9"]
+[ext_resource type="PackedScene" uid="uid://bw7ygisfrxidp" path="res://scene/ui/save_dialog.tscn" id="10"]
+[ext_resource type="Texture2D" uid="uid://ivyw8e1sofvy" path="res://sprite/record.png" id="11"]
+[ext_resource type="PackedScene" uid="uid://b3kqad0jifnrs" path="res://scene/ui/record_screen.tscn" id="12"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
 bg_color = Color(0.05, 0.05, 0.1, 0.5)
@@ -73,7 +78,7 @@ custom_minimum_size = Vector2(250, 60)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LangButton" type="TextureButton" parent="." unique_id=504862418]
+[node name="LangButton" type="Button" parent="." unique_id=504862418]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -83,4 +88,45 @@ offset_top = 15.0
 offset_right = -15.0
 offset_bottom = 75.0
 grow_horizontal = 0
-texture_normal = ExtResource("7_1qlln")
+icon = ExtResource("7_1qlln")
+expand_icon = true
+
+[node name="SettingsButton" type="Button" parent="." unique_id=1075172306]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -70.0
+offset_top = -70.0
+offset_right = -15.0
+offset_bottom = -15.0
+grow_horizontal = 0
+grow_vertical = 0
+icon = ExtResource("8")
+expand_icon = true
+
+[node name="RecordButton" type="Button" parent="." unique_id=142424493]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -70.0
+offset_top = -135.0
+offset_right = -15.0
+offset_bottom = -80.0
+grow_horizontal = 0
+grow_vertical = 0
+icon = ExtResource("11")
+expand_icon = true
+
+[node name="Settings" parent="." unique_id=1895848092 instance=ExtResource("9")]
+layout_mode = 1
+
+[node name="SaveDialog" parent="." unique_id=272196099 instance=ExtResource("10")]
+layout_mode = 1
+
+[node name="RecordScreen" parent="." unique_id=2142847305 instance=ExtResource("12")]

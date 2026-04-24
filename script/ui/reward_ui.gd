@@ -92,10 +92,12 @@ func show_card_choices(cards: Array) -> void:
 		_cards_container.remove_child(child)
 		child.queue_free()
 
+	var attack_db := CardLoader.load_attack_cards()
 	for card in cards:
+		var prefix := "[Skill] " if not attack_db.has(card.id) else "[Attack] "
 		_cards_container.add_child(_make_reward_slot(
 			load(card.cover) if card.cover != "" else null,
-			Locale.get_text(card.card_name),
+			prefix + Locale.get_text(card.card_name),
 			Locale.get_text(card.description),
 			_on_card_clicked.bind(card)
 		))
@@ -113,10 +115,12 @@ func show_draft_choices(cards: Array, current: int, total: int) -> void:
 		_cards_container.remove_child(child)
 		child.queue_free()
 
+	var attack_db := CardLoader.load_attack_cards()
 	for card in cards:
+		var prefix := "[Skill] " if not attack_db.has(card.id) else "[Attack] "
 		_cards_container.add_child(_make_reward_slot(
 			load(card.cover) if card.cover != "" else null,
-			Locale.get_text(card.card_name),
+			prefix + Locale.get_text(card.card_name),
 			Locale.get_text(card.description),
 			_on_draft_card_clicked.bind(card)
 		))

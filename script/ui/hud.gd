@@ -82,7 +82,7 @@ func _build_top_left() -> void:
 	root.add_child(vbox)
 
 	_phase_label = _make_label()
-	_phase_label.text = "场景- 关卡- —"
+	_phase_label.text = Locale.get_text("HUD_LEVEL") % [0, 0] + " — " + Locale.get_text("HUD_BATTLE")
 	vbox.add_child(_phase_label)
 
 	_hp_label = _make_label()
@@ -157,7 +157,7 @@ func _build_skill_bar() -> void:
 
 	_skill_energy_label = Label.new()
 	_skill_energy_label.add_theme_font_size_override("font_size", 12)
-	_skill_energy_label.text = "E:0"
+	_skill_energy_label.text = Locale.get_text("HUD_ENERGY") % 0
 	_skill_energy_label.visible = false
 	_skill_energy_label.anchor_left = 0.5
 	_skill_energy_label.anchor_right = 0.5
@@ -232,7 +232,7 @@ func _refresh_skill_bar() -> void:
 	if not _skill_card_engine:
 		return
 	var energy: int = _skill_card_engine.energy
-	_skill_energy_label.text = "E:%d" % energy
+	_skill_energy_label.text = Locale.get_text("HUD_ENERGY") % energy
 	_skill_energy_label.visible = true
 
 
@@ -252,7 +252,7 @@ func _on_skill_hand_changed() -> void:
 	_refresh_skill_bar()
 
 func _on_skill_energy_changed(new_energy: int) -> void:
-	_skill_energy_label.text = "E:%d" % new_energy
+	_skill_energy_label.text = Locale.get_text("HUD_ENERGY") % new_energy
 
 func _on_skill_turn_progress(current: int, total: int) -> void:
 	if _skill_progress_fg:
@@ -292,15 +292,16 @@ func _refresh_all() -> void:
 func _on_state_changed(state_name: String) -> void:
 	if _phase_label:
 		var info := _phase_label.text.split(" — ")
-		_phase_label.text = "%s — %s" % [info[0], state_name]
+		var localized_state := Locale.get_text("HUD_" + state_name.to_upper()) if Locale.get_text("HUD_" + state_name.to_upper()) != "HUD_" + state_name.to_upper() else state_name
+		_phase_label.text = "%s — %s" % [info[0], localized_state]
 
 func _on_level_started(scene_idx: int, level_idx: int) -> void:
 	if _phase_label:
-		_phase_label.text = "场景%d 关卡%d — 战斗" % [scene_idx, level_idx]
+		_phase_label.text = Locale.get_text("HUD_LEVEL") % [scene_idx, level_idx] + " — " + Locale.get_text("HUD_BATTLE")
 
 func _on_health_changed(current: int, maximum: int) -> void:
 	if _hp_label:
-		_hp_label.text = "HP %d/%d" % [current, maximum]
+		_hp_label.text = Locale.get_text("HUD_HP") % [current, maximum]
 	if _hp_fg:
 		_hp_fg.size.x = BAR_WIDTH * clampf(float(current) / float(maximum), 0.0, 1.0)
 
@@ -314,6 +315,6 @@ func _update_xp_display() -> void:
 	if not _player:
 		return
 	if _level_label:
-		_level_label.text = "LV %d  %d/%d" % [_player.level, _player.xp, _player.xp_to_next]
+		_level_label.text = Locale.get_text("HUD_LV") % [_player.level, _player.xp, _player.xp_to_next]
 	if _xp_fg:
 		_xp_fg.size.x = BAR_WIDTH * clampf(float(_player.xp) / float(_player.xp_to_next), 0.0, 1.0)

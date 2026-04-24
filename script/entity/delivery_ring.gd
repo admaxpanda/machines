@@ -33,7 +33,7 @@ func _ready() -> void:
 	add_child(_ring_visual)
 	_draw_ring()
 
-	get_tree().create_timer(duration).timeout.connect(queue_free)
+	get_tree().create_timer(duration, false).timeout.connect(queue_free)
 
 
 func _process(delta: float) -> void:

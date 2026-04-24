@@ -1,0 +1,85 @@
+[gd_scene format=3 uid="uid://dhvq2go1omsl1"]
+
+[ext_resource type="Texture2D" uid="uid://w84w56jfmutv" path="res://sprite/guide_en.png" id="1_pr1wb"]
+[ext_resource type="Script" uid="uid://binplq6i4vjuu" path="res://script/ui/settings.gd" id="1_script"]
+
+[node name="Settings" type="Control" unique_id=902335183]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=1567282134]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=339609932]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -174.0
+offset_right = 200.0
+offset_bottom = 174.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="Panel" unique_id=1141092322]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="GuideImage" type="TextureRect" parent="Panel/VBox" unique_id=377772120]
+custom_minimum_size = Vector2(400, 200)
+layout_mode = 2
+texture = ExtResource("1_pr1wb")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="sfxBoxContainer" type="HBoxContainer" parent="Panel/VBox" unique_id=1687644807]
+layout_mode = 2
+
+[node name="SfxLabel" type="Label" parent="Panel/VBox/sfxBoxContainer" unique_id=1952158753]
+layout_mode = 2
+text = "SFX"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SfxSlider" type="HSlider" parent="Panel/VBox/sfxBoxContainer" unique_id=1202906551]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+value = 80.0
+
+[node name="musicBoxContainer" type="HBoxContainer" parent="Panel/VBox" unique_id=1421935725]
+layout_mode = 2
+
+[node name="MusicLabel" type="Label" parent="Panel/VBox/musicBoxContainer" unique_id=1997936645]
+layout_mode = 2
+text = "Music"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MusicSlider" type="HSlider" parent="Panel/VBox/musicBoxContainer" unique_id=168892754]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+value = 80.0
+
+[node name="BackButton" type="Button" parent="Panel/VBox" unique_id=2008627300]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Back"

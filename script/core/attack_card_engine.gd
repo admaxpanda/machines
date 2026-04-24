@@ -133,7 +133,7 @@ func run_turns() -> void:
 		var elapsed := 0.0
 		turn_progress = 0.0
 		while elapsed < turn_duration:
-			await get_tree().create_timer(play_interval).timeout
+			await get_tree().create_timer(play_interval, false).timeout
 			elapsed += play_interval
 			turn_progress = clampf(elapsed / turn_duration, 0.0, 1.0)
 			if not hand.is_empty():
@@ -189,9 +189,7 @@ func _trigger_hailstorm() -> void:
 			}]
 		}
 		Attack.execute(chain, player, {"source": player})
-		await get_tree().create_timer(0.1).timeout
-
-## 吞噬暗影：回合结束时激发最左侧充能球
+		await get_tree().create_timer(0.1, false).timeout
 func _trigger_consuming_shadow() -> void:
 	var shadow_count := _count_ability(&"consuming_shadow")
 	if shadow_count <= 0:
@@ -204,7 +202,7 @@ func _trigger_consuming_shadow() -> void:
 		if orb_mgr.slots.is_empty():
 			break
 		orb_mgr.evoke_first()
-		await get_tree().create_timer(0.1).timeout
+		await get_tree().create_timer(0.1, false).timeout
 
 ## 触发所有充能球被动
 func _trigger_orb_passives() -> void:

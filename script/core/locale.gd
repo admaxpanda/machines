@@ -4,8 +4,10 @@ extends RefCounted
 ## 简易本地化：静态方法，从 JSON 加载 key → text 映射
 
 static var _data: Dictionary = {}
+static var current_lang: String = "zh"
 
 static func set_lang(lang: String) -> void:
+	current_lang = lang
 	var path := "res://data/locale/%s.json" % lang
 	var file := FileAccess.open(path, FileAccess.READ)
 	if not file:

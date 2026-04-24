@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://cqiosnbxsu434"]
+
+[ext_resource type="Script" uid="uid://ss4i1h0trkrr" path="res://script/ui/pause_menu.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://dhvq2go1omsl1" path="res://scene/ui/settings.tscn" id="2_settings"]
+[ext_resource type="PackedScene" uid="uid://bw7ygisfrxidp" path="res://scene/ui/save_dialog.tscn" id="3_save_dialog"]
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=826356815]
+script = ExtResource("1_script")
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=325079824]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=414050507]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -150.0
+offset_right = 150.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="Panel" unique_id=65951647]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="BtnResume" type="Button" parent="Panel/VBox" unique_id=649287451]
+custom_minimum_size = Vector2(250, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Resume"
+
+[node name="BtnSettings" type="Button" parent="Panel/VBox" unique_id=316571388]
+custom_minimum_size = Vector2(250, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Settings"
+
+[node name="BtnGiveUp" type="Button" parent="Panel/VBox" unique_id=1900988260]
+custom_minimum_size = Vector2(250, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Give Up"
+
+[node name="BtnReturn" type="Button" parent="Panel/VBox" unique_id=706894006]
+custom_minimum_size = Vector2(250, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Return"
+
+[node name="Settings" parent="." unique_id=1513496851 instance=ExtResource("2_settings")]
+
+[node name="GiveUpDialog" parent="." unique_id=95823702 instance=ExtResource("3_save_dialog")]

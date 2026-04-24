@@ -17,13 +17,19 @@ var _enemy_configs: Dictionary = {}    ## StringName -> Dictionary
 var _levels: Array = []                ## LevelData 数组
 var _current_level_index: int = -1     ## 当前关卡索引
 var _alive_enemies: int = 0            ## 当前关卡存活敌人数
+var _ground_layer: TileMapLayer         ## ground TileMapLayer 引用
+var _ground_cells: Array[Vector2i] = [] ## ground 格子坐标缓存
 var _waves_running: int = 0            ## 还在生成中的波次数
 var _reward_manager: Node              ## RewardManager 引用
 var _card_engine: Node                 ## CardEngine 引用
 
 ## 开始整场战斗
-func start_battle(enemies_node: Node2D) -> void:
+func start_battle(enemies_node: Node2D, starting_level_index: int = 0) -> void:
 	_enemies_node = enemies_node
+	_ground_layer = enemies_node.get_parent().get_node("ground") as TileMapLayer
+	if _ground_layer:
+		_ground_cells = _ground_layer.get_used_cells()
+	add_to_group(&"battle_manager")
 	_load_enemy_configs()
 	_levels = _load_all_levels()
 	if _levels.is_empty():
@@ -33,7 +39,7 @@ func start_battle(enemies_node: Node2D) -> void:
 		if player:
 			_reward_manager.on_battle_started(player)
 	battle_started.emit()
-	_start_level(0)
+	_start_level(starting_level_index)
 
 ## 启动指定关卡
 func _start_level(index: int) -> void:
@@ -91,14 +97,14 @@ func _on_rewards_completed() -> void:
 
 ## 单条波次协程：等待 start_time → 按间隔生成 count 个敌人
 func _run_wave(wave: WaveData) -> void:
-	await get_tree().create_timer(wave.start_time).timeout
+	await get_tree().create_timer(wave.start_time, false).timeout
 	for i in wave.count:
 		if _state == State.FAILED:
 			_waves_running -= 1
 			return
 		_spawn_enemy(wave.enemy_id, wave.type)
 		if i < wave.count - 1:
-			await get_tree().create_timer(wave.spawn_interval).timeout
+			await get_tree().create_timer(wave.spawn_interval, false).timeout
 	_waves_running -= 1
 	_check_level_cleared()
 
@@ -117,15 +123,28 @@ func _spawn_enemy(enemy_id: StringName, wave_type: StringName = &"normal") -> vo
 	enemy.died.connect(_on_enemy_died)
 	_enemies_node.add_child(enemy)
 	_alive_enemies += 1
+	enemy.global_position = _pick_spawn_position()
+
+## 从 ground 格子中随机选一个远离玩家的位置
+func _pick_spawn_position() -> Vector2:
 	var player := get_tree().get_first_node_in_group(&"player") as Node2D
-	if player:
+	if _ground_cells.is_empty() or not player:
 		var angle := randf() * TAU
-		var distance := randf() * 100.0 + 100.0
-		enemy.global_position = player.global_position + Vector2(cos(angle), sin(angle)) * distance
+		return player.global_position + Vector2(cos(angle), sin(angle)) * 150.0 if player else Vector2.ZERO
+	var tile_size := _ground_layer.tile_set.tile_size
+	var min_dist_sq := 100.0 * 100.0
+	for _attempt in range(20):
+		var cell: Vector2i = _ground_cells[randi() % _ground_cells.size()]
+		var world_pos := Vector2(cell.x * tile_size.x + tile_size.x / 2, cell.y * tile_size.y + tile_size.y / 2)
+		if (world_pos - player.global_position).length_squared() >= min_dist_sq:
+			return world_pos
+	var fallback: Vector2i = _ground_cells[randi() % _ground_cells.size()]
+	return Vector2(fallback.x * tile_size.x + tile_size.x / 2, fallback.y * tile_size.y + tile_size.y / 2)
 
 ## 敌人死亡回调
 func _on_enemy_died(enemy: CharacterBody2D) -> void:
 	_alive_enemies -= 1
+	GameMode.kill_count += 1
 	_trigger_consuming_shadow_kill()
 	if enemy.wave_type == &"boss":
 		var player := get_tree().get_first_node_in_group(&"player") as CharacterBody2D
@@ -257,7 +276,7 @@ func _collect_gems_then_clear() -> void:
 		if is_instance_valid(gem) and gem.has_method("force_attract"):
 			gem.force_attract()
 	while get_tree().get_nodes_in_group(&"gem").size() > 0:
-		await get_tree().create_timer(0.05).timeout
+		await get_tree().create_timer(0.05, false).timeout
 	on_level_cleared()
 
 ## 从 enemies.json 加载所有敌人配置

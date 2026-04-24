@@ -1,0 +1,133 @@
+[gd_scene format=3 uid="uid://b3kqad0jifnrs"]
+
+[ext_resource type="Script" uid="uid://76xy55garitr" path="res://script/ui/record_screen.gd" id="1_script"]
+
+[node name="RecordScreen" type="CanvasLayer" unique_id=1139818979]
+layer = 10
+script = ExtResource("1_script")
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=1683500378]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=2091467956]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -55.0
+offset_right = 100.0
+offset_bottom = 55.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="Panel" unique_id=2120212734]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="TitleRow" type="HBoxContainer" parent="Panel/VBox" unique_id=1541001718]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="BtnPrev" type="Button" parent="Panel/VBox/TitleRow" unique_id=701559607]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+text = "◀"
+
+[node name="TitleLabel" type="Label" parent="Panel/VBox/TitleRow" unique_id=807647636]
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_alignment = 1
+
+[node name="BtnNext" type="Button" parent="Panel/VBox/TitleRow" unique_id=453611605]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+text = "▶"
+
+[node name="StatsLabel" type="Label" parent="Panel/VBox" unique_id=120222221]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="NoRecordLabel" type="Label" parent="Panel/VBox" unique_id=782377904]
+visible = false
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="CardColumns" type="HBoxContainer" parent="Panel/VBox" unique_id=713700266]
+custom_minimum_size = Vector2(600, 200)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="AttackColumn" type="VBoxContainer" parent="Panel/VBox/CardColumns" unique_id=1084768928]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="AttackTitle" type="Label" parent="Panel/VBox/CardColumns/AttackColumn" unique_id=1365397635]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="AttackScroll" type="ScrollContainer" parent="Panel/VBox/CardColumns/AttackColumn" unique_id=1841917633]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="AttackCards" type="VBoxContainer" parent="Panel/VBox/CardColumns/AttackColumn/AttackScroll" unique_id=562729718]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="SkillColumn" type="VBoxContainer" parent="Panel/VBox/CardColumns" unique_id=544346073]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="SkillTitle" type="Label" parent="Panel/VBox/CardColumns/SkillColumn" unique_id=1663443408]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="SkillScroll" type="ScrollContainer" parent="Panel/VBox/CardColumns/SkillColumn" unique_id=1050166665]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="SkillCards" type="VBoxContainer" parent="Panel/VBox/CardColumns/SkillColumn/SkillScroll" unique_id=1298119777]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="AbilityColumn" type="VBoxContainer" parent="Panel/VBox/CardColumns" unique_id=873757830]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="AbilityTitle" type="Label" parent="Panel/VBox/CardColumns/AbilityColumn" unique_id=1671806244]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="AbilityScroll" type="ScrollContainer" parent="Panel/VBox/CardColumns/AbilityColumn" unique_id=1290514139]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="AbilityCards" type="VBoxContainer" parent="Panel/VBox/CardColumns/AbilityColumn/AbilityScroll" unique_id=1324186441]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="BtnReturn" type="Button" parent="Panel/VBox" unique_id=645734792]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Back"

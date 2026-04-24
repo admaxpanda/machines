@@ -278,7 +278,7 @@ static func _show_card_preview(source: Node2D, card: CardData) -> void:
 	tex.position = Vector2(_x, _y)
 	tex.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(tex)
-	source.get_tree().create_timer(0.5).timeout.connect(func() -> void: canvas.queue_free())
+	source.get_tree().create_timer(0.5, false).timeout.connect(func() -> void: canvas.queue_free())
 
 ## --- 伤害飘字 ---
 
@@ -405,7 +405,7 @@ static func _multi_release(node: Dictionary, source: Node2D, context: Dictionary
 		if delay <= 0.0:
 			_execute_node(chain, source, null, context)
 		else:
-			source.get_tree().create_timer(delay).timeout.connect(
+			source.get_tree().create_timer(delay, false).timeout.connect(
 				func() -> void: _execute_node(chain, source, null, context)
 			)
 
@@ -428,14 +428,14 @@ static func _multi_release_claw(node: Dictionary, source: Node2D, context: Dicti
 				break
 			_claw_step(chain, source, context, state)
 		else:
-			source.get_tree().create_timer(delay).timeout.connect(
+			source.get_tree().create_timer(delay, false).timeout.connect(
 				func() -> void:
 					if state.interrupted or not is_instance_valid(source):
 						return
 					_claw_step(chain, source, context, state)
 			)
 	var total_time := interval * float(max(count - 1, 0)) + 0.05
-	source.get_tree().create_timer(total_time).timeout.connect(
+	source.get_tree().create_timer(total_time, false).timeout.connect(
 		func() -> void:
 			if state.total_hits > 0 and is_instance_valid(player):
 				player.claw_times += 1
@@ -471,7 +471,7 @@ static func _multi_release_drill(node: Dictionary, source: Node2D, context: Dict
 		if delay <= 0.0:
 			_execute_node(chain, source, null, context)
 		else:
-			source.get_tree().create_timer(delay).timeout.connect(
+			source.get_tree().create_timer(delay, false).timeout.connect(
 				func() -> void: _execute_node(chain, source, null, context)
 			)
 
@@ -580,7 +580,7 @@ static func _aoe_detect(node: Dictionary, source: Node2D, context: Dictionary) -
 	if node.get("element", "") == "lightning":
 		_check_lightning_rods(source, spawn_pos, on_detect)
 
-	source.get_tree().create_timer(lifetime).timeout.connect(area.queue_free)
+	source.get_tree().create_timer(lifetime, false).timeout.connect(area.queue_free)
 
 ## 光束触发器：梯形区域碰撞检测
 static func _beam_detect(node: Dictionary, source: Node2D, context: Dictionary) -> void:

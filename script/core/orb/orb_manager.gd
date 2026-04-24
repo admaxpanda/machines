@@ -110,7 +110,7 @@ func trigger_all_passives() -> void:
 		_play_passive_visual(i)
 		var orb_pos := _visuals[i].global_position
 		_trigger_passive(slots[i], orb_pos)
-		await get_tree().create_timer(PASSIVE_INTERVAL).timeout
+		await get_tree().create_timer(PASSIVE_INTERVAL, false).timeout
 	_refresh_labels()
 
 ## --- 被动视觉效果：球副本放大淡出 ---

@@ -5,6 +5,9 @@ extends CharacterBody2D
 signal health_changed(current: int, maximum: int)
 signal xp_changed(current_xp: int, xp_to_next: int)
 signal leveled_up(new_level: int)
+signal player_died
+
+var _dead: bool = false
 
 var hp: int = 60
 var max_hp: int = 75
@@ -50,7 +53,7 @@ func _ready() -> void:
 	add_child(drone_manager)
 
 func take_damage(amount: int) -> void:
-	if invincible:
+	if invincible or _dead:
 		return
 	if buffer_charges > 0:
 		buffer_charges -= 1
@@ -58,6 +61,12 @@ func take_damage(amount: int) -> void:
 	var remaining: int = buff_container.apply_shield_damage(amount)
 	hp = maxi(hp - remaining, 0)
 	health_changed.emit(hp, max_hp)
+	if hp <= 0:
+		_dead = true
+		var bms := get_tree().get_nodes_in_group(&"battle_manager")
+		if bms.size() > 0:
+			bms[0].fail_battle()
+		player_died.emit()
 
 func heal(amount: int) -> void:
 	hp = mini(hp + amount, max_hp)
@@ -171,15 +180,15 @@ func start_invincibility(duration: float) -> void:
 		if t1 >= duration:
 			break
 		var t2 := t1 + 0.05
-		get_tree().create_timer(t1).timeout.connect(func():
+		get_tree().create_timer(t1, false).timeout.connect(func():
 			if is_instance_valid(self) and _invincible_version == version:
 				_sprite.modulate = Color(8, 8, 8, 1)
 		)
-		get_tree().create_timer(t2).timeout.connect(func():
+		get_tree().create_timer(t2, false).timeout.connect(func():
 			if is_instance_valid(self) and _invincible_version == version:
 				_sprite.modulate = Color.WHITE
 		)
-	get_tree().create_timer(duration).timeout.connect(func():
+	get_tree().create_timer(duration, false).timeout.connect(func():
 		if is_instance_valid(self) and _invincible_version == version:
 			invincible = false
 			_sprite.modulate = Color.WHITE
