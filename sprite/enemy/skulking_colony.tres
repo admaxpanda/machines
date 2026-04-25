@@ -1,0 +1,93 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://dorng2osvw14r"]
+
+[ext_resource type="Texture2D" uid="uid://mxdag0tdcfyp" path="res://sprite/enemy/skulking_colony.png" id="1_jp0lj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qknt7"]
+atlas = ExtResource("1_jp0lj")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hmx07"]
+atlas = ExtResource("1_jp0lj")
+region = Rect2(128, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d4wvk"]
+atlas = ExtResource("1_jp0lj")
+region = Rect2(256, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_16l6y"]
+atlas = ExtResource("1_jp0lj")
+region = Rect2(384, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v5i12"]
+atlas = ExtResource("1_jp0lj")
+region = Rect2(0, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1mgnf"]
+atlas = ExtResource("1_jp0lj")
+region = Rect2(128, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ioa8d"]
+atlas = ExtResource("1_jp0lj")
+region = Rect2(256, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_er0vd"]
+atlas = ExtResource("1_jp0lj")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gl8sn"]
+atlas = ExtResource("1_jp0lj")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_keslt"]
+atlas = ExtResource("1_jp0lj")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bcqor"]
+atlas = ExtResource("1_jp0lj")
+region = Rect2(384, 0, 128, 128)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qknt7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hmx07")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d4wvk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_16l6y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v5i12")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1mgnf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ioa8d")
+}],
+"loop": true,
+"name": &"attacking",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_er0vd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gl8sn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_keslt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bcqor")
+}],
+"loop": true,
+"name": &"normal",
+"speed": 5.0
+}]

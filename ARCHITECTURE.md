@@ -72,9 +72,8 @@ res://
 │   │   ├── player/
 │   │   │   └── player.gd                 [x]
 │   │   ├── enemy/
-│   │   │   ├── base_enemy.gd             [ ]
-│   │   │   ├── slime.gd                  [x] 史莱姆脚本（两种史莱姆共用）
-│   │   │   └── enemies/                  [ ] 各具体敌人脚本
+│   │   │   ├── enemy.gd                  [x] 通用敌人脚本（所有敌人共用，JSON驱动）
+│   │   │   └── enemy_projectile.gd       [x] 敌人投射物
 │   │   ├── projectile/
 │   │   │   ├── bullet.gd                 [ ]
 │   │   │   ├── beam.gd                   [ ]

@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://iokidp4os053"]
+
+[ext_resource type="Script" uid="uid://cv7dmdji32j6o" path="res://script/entity/enemy/enemy.gd" id="1"]
+[ext_resource type="SpriteFrames" uid="uid://dw1ouix0gyycv" path="res://sprite/enemy/wriggler.tres" id="2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
+radius = 4.0
+
+[node name="Wriggler" type="CharacterBody2D" unique_id=1261005656]
+collision_layer = 2
+platform_floor_layers = 0
+script = ExtResource("1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=586784741]
+sprite_frames = ExtResource("2")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=263914578]
+shape = SubResource("CircleShape2D_1")

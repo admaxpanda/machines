@@ -74,6 +74,7 @@ func _play_card(card: CardData) -> void:
 	else:
 		discard_pile.append(card)
 	hand_changed.emit()
+	_spawn_card_name(card.card_name)
 	var context := {
 		"source": source,
 		"card_engine": self,
@@ -83,6 +84,23 @@ func _play_card(card: CardData) -> void:
 	for i in extra:
 		CardResolver.play(card, context)
 	_check_subroutine(card, context)
+
+## 在玩家身旁显示卡牌名称悬浮文字
+func _spawn_card_name(card_name_key: String) -> void:
+	if not source or not is_instance_valid(source):
+		return
+	var label := Label.new()
+	label.text = Locale.get_text(card_name_key)
+	label.z_index = 100
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var offset := Vector2(randf_range(-30, 30), randf_range(-40, -10))
+	label.global_position = source.global_position + offset
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	source.get_parent().add_child(label)
+	var tween := label.create_tween()
+	tween.tween_property(label, "global_position:y", label.global_position.y - 20, 0.5)
+	tween.parallel().tween_property(label, "modulate:a", 0.0, 0.5).set_delay(0.2)
+	tween.tween_callback(label.queue_free)
 
 ## 子程序：20% 概率再次触发卡牌效果 + 退还 1 能量 + 无人机视觉
 func _check_subroutine(card: CardData, context: Dictionary) -> void:

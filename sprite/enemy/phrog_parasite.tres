@@ -1,0 +1,39 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://3o7qyiahsq7h"]
+
+[ext_resource type="Texture2D" uid="uid://deomon21ruth0" path="res://sprite/enemy/phrog_parasite.png" id="1_6qy6q"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mmuib"]
+atlas = ExtResource("1_6qy6q")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_snf3k"]
+atlas = ExtResource("1_6qy6q")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b7ow5"]
+atlas = ExtResource("1_6qy6q")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_suco6"]
+atlas = ExtResource("1_6qy6q")
+region = Rect2(384, 0, 128, 128)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mmuib")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_snf3k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b7ow5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_suco6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]

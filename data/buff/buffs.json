@@ -90,6 +90,20 @@
       "duration_type": "turns",
       "stacking": "intensity",
       "atomic": true
+    },
+    {
+      "id": "smoggy",
+      "name": "烟雾弥漫",
+      "duration_type": "turns",
+      "stacking": "intensity",
+      "atomic": true
+    },
+    {
+      "id": "tender_aura",
+      "name": "脆弱光环",
+      "duration_type": "permanent",
+      "stacking": "intensity",
+      "atomic": true
     }
   ]
 }

@@ -1,0 +1,46 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://ds3qv4b407lnj"]
+
+[ext_resource type="Texture2D" uid="uid://bemqkrtfqma4h" path="res://sprite/enemy/biting.png" id="1_jgejh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fa1ja"]
+atlas = ExtResource("1_jgejh")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kivdb"]
+atlas = ExtResource("1_jgejh")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sy5f1"]
+atlas = ExtResource("1_jgejh")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bhbxl"]
+atlas = ExtResource("1_jgejh")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v7fwr"]
+atlas = ExtResource("1_jgejh")
+region = Rect2(256, 0, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fa1ja")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kivdb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sy5f1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bhbxl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v7fwr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]

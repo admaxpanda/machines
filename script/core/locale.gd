@@ -4,7 +4,14 @@ extends RefCounted
 ## 简易本地化：静态方法，从 JSON 加载 key → text 映射
 
 static var _data: Dictionary = {}
-static var current_lang: String = "zh"
+static var current_lang: String = "en"
+
+static func _static_init() -> void:
+	var locale := OS.get_locale_language()
+	if locale.begins_with("zh"):
+		set_lang("zh")
+	else:
+		set_lang("en")
 
 static func set_lang(lang: String) -> void:
 	current_lang = lang

@@ -1,0 +1,58 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://bwc2nivo6gvui"]
+
+[ext_resource type="Texture2D" uid="uid://eo8870sp1yal" path="res://sprite/enemy/bowlbug_rock.png" id="1_nqf8f"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0mtws"]
+atlas = ExtResource("1_nqf8f")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u85pm"]
+atlas = ExtResource("1_nqf8f")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f0yn4"]
+atlas = ExtResource("1_nqf8f")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u6lur"]
+atlas = ExtResource("1_nqf8f")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4imy2"]
+atlas = ExtResource("1_nqf8f")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pacjf"]
+atlas = ExtResource("1_nqf8f")
+region = Rect2(64, 0, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0mtws")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u85pm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f0yn4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u6lur")
+}],
+"loop": true,
+"name": &"attacking",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4imy2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pacjf")
+}],
+"loop": false,
+"name": &"preparing",
+"speed": 5.0
+}]

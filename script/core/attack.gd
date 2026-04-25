@@ -39,7 +39,10 @@ static func _execute_node(node: Dictionary, source: Node2D, target: Node2D, cont
 				dd_target.take_damage(dmg)
 				_show_damage_number(dd_target, dmg)
 		"knockback":
-			print("[Attack] knockback target=%s source=%s" % [target, source])
+			if target and source and target.has_method("apply_knockback"):
+				var _kb_dir := (target.global_position - source.global_position).normalized()
+				var _kb_force := float(node.get("force", 300.0))
+				target.apply_knockback(_kb_dir, _kb_force)
 		"draw_attack_cards":
 			var _da_engines := source.get_tree().get_nodes_in_group(&"card_engine")
 			for _da_eng in _da_engines:
@@ -278,7 +281,7 @@ static func _show_card_preview(source: Node2D, card: CardData) -> void:
 	tex.position = Vector2(_x, _y)
 	tex.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(tex)
-	source.get_tree().create_timer(0.5, false).timeout.connect(func() -> void: canvas.queue_free())
+	source.get_tree().create_timer(0.5, false).timeout.connect(func() -> void: if is_instance_valid(canvas): canvas.queue_free())
 
 ## --- 伤害飘字 ---
 
@@ -812,8 +815,12 @@ static func _fall(node: Dictionary, source: Node2D, context: Dictionary) -> void
 	var tween := source.get_tree().create_tween()
 	tween.tween_property(visual, "global_position", target_pos, fall_time)
 	tween.tween_callback(func() -> void:
+		if not is_instance_valid(visual):
+			return
 		visual.queue_free()
 		# 落地时缩放反馈
+		if not is_instance_valid(source):
+			return
 		_show_land_impact(target_pos, source)
 		var land_context := context.duplicate()
 		land_context["parent_position"] = target_pos

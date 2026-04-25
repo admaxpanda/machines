@@ -15,7 +15,7 @@ var _sprite: AnimatedSprite2D
 
 func _ready() -> void:
 	top_level = true
-	z_index = -1
+	z_index = 0
 	_y_offset = randf_range(-Y_OFFSET_RANGE, Y_OFFSET_RANGE)
 	_sprite = AnimatedSprite2D.new()
 	_sprite.sprite_frames = load("res://sprite/drone.tres")
@@ -63,7 +63,7 @@ func play_trigger_visual() -> void:
 	copy.global_position = global_position
 	copy.scale = Vector2(_sprite.scale)
 	copy.modulate.a = 1.0
-	copy.z_index = -1
+	copy.z_index = 0
 	copy.top_level = true
 	add_child(copy)
 	var tween := get_tree().create_tween()

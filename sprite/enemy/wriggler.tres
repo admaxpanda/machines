@@ -1,0 +1,39 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://dw1ouix0gyycv"]
+
+[ext_resource type="Texture2D" uid="uid://dv60fyp2ddrxo" path="res://sprite/enemy/wriggler.png" id="1_r1rr2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nv62g"]
+atlas = ExtResource("1_r1rr2")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_np1kv"]
+atlas = ExtResource("1_r1rr2")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5mpi6"]
+atlas = ExtResource("1_r1rr2")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ncjd8"]
+atlas = ExtResource("1_r1rr2")
+region = Rect2(192, 0, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nv62g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_np1kv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5mpi6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ncjd8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]

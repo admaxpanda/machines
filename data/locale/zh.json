@@ -157,5 +157,8 @@
   "RESULT_SKILL_TITLE": "技能卡",
   "RESULT_ABILITY_TITLE": "能力卡",
   "RECORD_NO_RECORDS": "暂无记录",
-  "RECORD_RETURN": "返回"
+  "RECORD_RETURN": "返回",
+  "INFECTION": "感染",
+  "INFECTION_DESC": "对自身造成2点伤害",
+  "HARDENED_SHELL": "硬化外壳"
 }

@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://11pv0wfrad23"]
+
+[ext_resource type="Script" uid="uid://cv7dmdji32j6o" path="res://script/entity/enemy/enemy.gd" id="1"]
+[ext_resource type="SpriteFrames" uid="uid://3o7qyiahsq7h" path="res://sprite/enemy/phrog_parasite.tres" id="2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
+radius = 29.017237
+
+[node name="PhrogParasite" type="CharacterBody2D" unique_id=456184572]
+collision_layer = 2
+platform_floor_layers = 0
+script = ExtResource("1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=526733262]
+sprite_frames = ExtResource("2")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=711764116]
+shape = SubResource("CircleShape2D_1")

@@ -40,6 +40,19 @@
       "cover": "res://sprite/status_card/void.png",
       "chain": {},
       "exhaust": true
+    },
+    {
+      "id": "infection",
+      "name": "INFECTION",
+      "description": "INFECTION_DESC",
+      "cost": 1,
+      "cover": "res://sprite/status_card/infection.png",
+      "chain": {
+        "type": "deal_damage",
+        "value": 2,
+        "self_target": true
+      },
+      "exhaust": true
     }
   ]
 }

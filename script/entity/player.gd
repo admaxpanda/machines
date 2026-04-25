@@ -3,6 +3,7 @@ extends CharacterBody2D
 @export var speed: float = 200.0
 
 signal health_changed(current: int, maximum: int)
+signal hp_lost(amount: int, source: Node2D)
 signal xp_changed(current_xp: int, xp_to_next: int)
 signal leveled_up(new_level: int)
 signal player_died
@@ -52,7 +53,7 @@ func _ready() -> void:
 	drone_manager.set_script(drone_script)
 	add_child(drone_manager)
 
-func take_damage(amount: int) -> void:
+func take_damage(amount: int, source: Node2D = null) -> void:
 	if invincible or _dead:
 		return
 	if buffer_charges > 0:
@@ -61,6 +62,9 @@ func take_damage(amount: int) -> void:
 	var remaining: int = buff_container.apply_shield_damage(amount)
 	hp = maxi(hp - remaining, 0)
 	health_changed.emit(hp, max_hp)
+	if remaining > 0:
+		hp_lost.emit(remaining, source)
+		_show_damage_number(remaining)
 	if hp <= 0:
 		_dead = true
 		var bms := get_tree().get_nodes_in_group(&"battle_manager")
@@ -240,3 +244,22 @@ func perform_dash(distance: float, duration: float) -> void:
 	for img in afterimages:
 		if is_instance_valid(img):
 			img.queue_free()
+
+
+func _show_damage_number(dmg: int) -> void:
+	var label := Label.new()
+	label.text = str(dmg)
+	label.add_theme_font_size_override("font_size", 20)
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.add_theme_color_override("font_color", Color(1.0, 0.15, 0.15))
+	label.add_theme_color_override("font_outline_color", Color.BLACK)
+	label.add_theme_constant_override("outline_size", 3)
+	label.global_position = global_position + Vector2(randf_range(-10, 10), -24)
+	label.z_index = 100
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	get_tree().current_scene.add_child(label)
+	var tween := get_tree().create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(label, "position:y", label.position.y - 40, 0.8)
+	tween.tween_property(label, "modulate:a", 0.0, 0.8)
+	tween.chain().tween_callback(label.queue_free)

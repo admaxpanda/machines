@@ -5,7 +5,7 @@ extends CardEngine
 signal turn_progress_changed(current: int, total: int)
 
 var _turn_counter: int = 0
-var draw_every_n_turns: int = 5
+var draw_every_n_turns: int = 1
 
 func _ready() -> void:
 	add_to_group(&"skill_card_engine")

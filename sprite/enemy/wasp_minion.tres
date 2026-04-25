@@ -1,0 +1,39 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://oaga6dq2m1pn"]
+
+[ext_resource type="Texture2D" uid="uid://0mfnus44vs7o" path="res://sprite/enemy/wasp.png" id="1_5dsxb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7fhvn"]
+atlas = ExtResource("1_5dsxb")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3gviu"]
+atlas = ExtResource("1_5dsxb")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aagwb"]
+atlas = ExtResource("1_5dsxb")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1fogs"]
+atlas = ExtResource("1_5dsxb")
+region = Rect2(48, 0, 16, 16)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7fhvn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3gviu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aagwb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1fogs")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]

@@ -159,5 +159,8 @@
   "RESULT_SKILL_TITLE": "Skill Cards",
   "RESULT_ABILITY_TITLE": "Abilities",
   "RECORD_NO_RECORDS": "No Records",
-  "RECORD_RETURN": "Back"
+  "RECORD_RETURN": "Back",
+  "INFECTION": "Infection",
+  "INFECTION_DESC": "Deal 2 damage to self",
+  "HARDENED_SHELL": "Hardened Shell"
 }

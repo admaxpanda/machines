@@ -1,0 +1,39 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://xeu0rbbwf3ti"]
+
+[ext_resource type="Texture2D" uid="uid://nuhghcrk7nqc" path="res://sprite/enemy/colony_attack.png" id="1_lb70b"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bnnv0"]
+atlas = ExtResource("1_lb70b")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_isb1v"]
+atlas = ExtResource("1_lb70b")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n2clb"]
+atlas = ExtResource("1_lb70b")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p2qsj"]
+atlas = ExtResource("1_lb70b")
+region = Rect2(96, 0, 32, 32)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bnnv0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_isb1v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n2clb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p2qsj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]

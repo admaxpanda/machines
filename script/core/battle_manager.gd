@@ -124,6 +124,11 @@ func _spawn_enemy(enemy_id: StringName, wave_type: StringName = &"normal") -> vo
 	_enemies_node.add_child(enemy)
 	_alive_enemies += 1
 	enemy.global_position = _pick_spawn_position()
+	# HP 膨胀：每关 +10%
+	if _current_level_index > 0:
+		var scale := 1.0 + 0.1 * float(_current_level_index)
+		enemy.hp = int(float(enemy.hp) * scale)
+		enemy.max_hp = enemy.hp
 
 ## 从 ground 格子中随机选一个远离玩家的位置
 func _pick_spawn_position() -> Vector2:
@@ -147,12 +152,48 @@ func _on_enemy_died(enemy: CharacterBody2D) -> void:
 	GameMode.kill_count += 1
 	_trigger_consuming_shadow_kill()
 	if enemy.wave_type == &"boss":
+		_cleanup_minions(enemy)
 		var player := get_tree().get_first_node_in_group(&"player") as CharacterBody2D
 		if player and player.has_method("heal_boss_reward"):
 			player.heal_boss_reward()
-		_collect_gems_then_clear.call_deferred()
+		if _alive_enemies <= 0 and _waves_running <= 0:
+			_collect_gems_then_clear.call_deferred()
 		return
 	_check_level_cleared()
+
+## Boss 死亡时清理其爪牙
+func _cleanup_minions(summoner: Node2D) -> void:
+	for enemy in get_tree().get_nodes_in_group(&"enemy"):
+		if is_instance_valid(enemy) and enemy._is_minion and enemy._summoner == summoner:
+			enemy._dead = true
+			enemy.queue_free()
+			_alive_enemies -= 1
+
+## 在指定位置生成敌人（供 slime 能力调用）
+func spawn_enemy_at(enemy_id: StringName, pos: Vector2, summoner: Node2D = null) -> void:
+	var cfg: Dictionary = _enemy_configs.get(enemy_id, {})
+	if cfg.is_empty():
+		return
+	var scene_path: String = cfg.get("scene", "")
+	var scene: PackedScene = load(scene_path) as PackedScene
+	if not scene:
+		return
+	var enemy := scene.instantiate()
+	enemy.init(cfg)
+	enemy.wave_type = &"normal"
+	if summoner:
+		enemy._is_minion = true
+		enemy._summoner = summoner
+		enemy._no_xp_drop = true
+	enemy.died.connect(_on_enemy_died)
+	_enemies_node.add_child(enemy)
+	_alive_enemies += 1
+	enemy.global_position = pos
+	# HP 膨胀
+	if _current_level_index > 0:
+		var scale := 1.0 + 0.1 * float(_current_level_index)
+		enemy.hp = int(float(enemy.hp) * scale)
+		enemy.max_hp = enemy.hp
 
 ## 吞噬暗影：击杀敌人时触发所有黑暗充能球被动
 func _trigger_consuming_shadow_kill() -> void:

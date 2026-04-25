@@ -1,0 +1,53 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://clngwgf43x8h1"]
+
+[ext_resource type="Texture2D" uid="uid://dwjbj805qy00g" path="res://sprite/enemy/entomancer.png" id="1_qjp4a"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v04xf"]
+atlas = ExtResource("1_qjp4a")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oavos"]
+atlas = ExtResource("1_qjp4a")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8wrqo"]
+atlas = ExtResource("1_qjp4a")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ts2d1"]
+atlas = ExtResource("1_qjp4a")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jtfqi"]
+atlas = ExtResource("1_qjp4a")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8wyhf"]
+atlas = ExtResource("1_qjp4a")
+region = Rect2(128, 128, 128, 128)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v04xf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oavos")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8wrqo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ts2d1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jtfqi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8wyhf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]

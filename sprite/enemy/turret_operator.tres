@@ -1,0 +1,72 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://m3s27vd826fm"]
+
+[ext_resource type="Texture2D" uid="uid://bf67povbb2llb" path="res://sprite/enemy/turret_operator.png" id="1_p0oe1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yhxu5"]
+atlas = ExtResource("1_p0oe1")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e4jxr"]
+atlas = ExtResource("1_p0oe1")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m4ehr"]
+atlas = ExtResource("1_p0oe1")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e6ud6"]
+atlas = ExtResource("1_p0oe1")
+region = Rect2(192, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_igtqn"]
+atlas = ExtResource("1_p0oe1")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cmmpb"]
+atlas = ExtResource("1_p0oe1")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_udlor"]
+atlas = ExtResource("1_p0oe1")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pent4"]
+atlas = ExtResource("1_p0oe1")
+region = Rect2(192, 0, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yhxu5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e4jxr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m4ehr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e6ud6")
+}],
+"loop": true,
+"name": &"moving",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_igtqn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cmmpb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_udlor")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pent4")
+}],
+"loop": true,
+"name": &"normal",
+"speed": 5.0
+}]

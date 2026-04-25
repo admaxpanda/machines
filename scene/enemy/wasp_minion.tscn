@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://gwfhcf53g7xt"]
+
+[ext_resource type="Script" uid="uid://cv7dmdji32j6o" path="res://script/entity/enemy/enemy.gd" id="1"]
+[ext_resource type="SpriteFrames" uid="uid://oaga6dq2m1pn" path="res://sprite/enemy/wasp_minion.tres" id="2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
+radius = 3.0
+
+[node name="WaspMinion" type="CharacterBody2D" unique_id=625223850]
+collision_layer = 2
+platform_floor_layers = 0
+script = ExtResource("1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1730502375]
+sprite_frames = ExtResource("2")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1356496686]
+shape = SubResource("CircleShape2D_1")

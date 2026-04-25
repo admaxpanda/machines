@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://5in2p3wl3eqo"]
+
+[ext_resource type="Script" uid="uid://cv7dmdji32j6o" path="res://script/entity/enemy/enemy.gd" id="1"]
+[ext_resource type="SpriteFrames" uid="uid://bbyc5qit02wt7" path="res://sprite/enemy/inklet.tres" id="2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
+radius = 5.0
+
+[node name="Inklet" type="CharacterBody2D" unique_id=1006076591]
+collision_layer = 2
+platform_floor_layers = 0
+script = ExtResource("1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1076283384]
+sprite_frames = ExtResource("2")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1975928537]
+shape = SubResource("CircleShape2D_1")
