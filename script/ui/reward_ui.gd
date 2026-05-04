@@ -184,7 +184,7 @@ func _make_reward_slot(tex: Texture2D, title: String, desc: String, callback: Ca
 	var name_label := Label.new()
 	name_label.text = title
 	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	name_label.add_theme_font_size_override("font_size", 11)
+	name_label.add_theme_font_size_override("font_size", 16)
 	name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	vbox.add_child(name_label)
 
@@ -192,7 +192,7 @@ func _make_reward_slot(tex: Texture2D, title: String, desc: String, callback: Ca
 		var desc_label := Label.new()
 		desc_label.text = desc
 		desc_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		desc_label.add_theme_font_size_override("font_size", 9)
+		desc_label.add_theme_font_size_override("font_size", 16)
 		desc_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		desc_label.custom_minimum_size.x = REWARD_IMG_SIZE.x
 		desc_label.mouse_filter = Control.MOUSE_FILTER_IGNORE

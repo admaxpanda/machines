@@ -27,6 +27,10 @@ window/size/viewport_height=768
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
+[gui]
+
+theme/custom_font="uid://bfkhqy83b5npt"
+
 [input]
 
 move_left={

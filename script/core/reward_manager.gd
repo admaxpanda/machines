@@ -79,14 +79,9 @@ func _show_next_ability_reward() -> void:
 		_finish_rewards()
 		return
 	var ability_db := CardLoader.load_ability_cards()
-	var equipped_ids: Dictionary = {}
-	if _player:
-		for a in _player.abilities:
-			equipped_ids[a.id] = true
 	var pool: Array = []
 	for id in ability_db:
-		if not equipped_ids.has(id) or id == &"subroutine":
-			pool.append(ability_db[id])
+		pool.append(ability_db[id])
 	pool.shuffle()
 	var choices := pool.slice(0, mini(3, pool.size()))
 	if choices.is_empty():

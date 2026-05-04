@@ -197,7 +197,7 @@ func take_damage(amount: int) -> void:
 		if _damage_pool <= 0.0:
 			return
 		var actual := minf(float(amount), _damage_pool)
-		hp -= int(actual)
+		hp -= maxi(1, int(roundf(actual)))
 		_damage_pool -= actual
 		_update_damage_pool_visual()
 		if _damage_pool <= 0.0:
@@ -227,6 +227,11 @@ func _start_fuse() -> void:
 
 func _explode() -> void:
 	_dead = true
+	# 清除视觉指示器
+	_clear_charge_line()
+	if is_instance_valid(_inklet_aim_indicator):
+		_inklet_aim_indicator.queue_free()
+		_inklet_aim_indicator = null
 	var radius := float(_self_destruct_config.get("radius", 80.0))
 	var sprite := $AnimatedSprite2D as AnimatedSprite2D
 	# 播放爆炸动画
@@ -254,6 +259,11 @@ func _die() -> void:
 		_explode()
 		return
 	_dead = true
+	# 清除视觉指示器
+	_clear_charge_line()
+	if is_instance_valid(_inklet_aim_indicator):
+		_inklet_aim_indicator.queue_free()
+		_inklet_aim_indicator = null
 	# 移除光环效果
 	_remove_tender_aura()
 	_remove_smoggy()
@@ -628,6 +638,8 @@ func _ability_fall_attack(ab: Dictionary) -> void:
 		if not is_instance_valid(indicator):
 			return
 		indicator.queue_free()
+		if not is_instance_valid(self) or _dead:
+			return
 		_do_aoe_damage(target_pos, radius, dmg)
 	)
 
@@ -1126,6 +1138,8 @@ func _ability_colony_swarm(ab: Dictionary) -> void:
 			if not is_instance_valid(indicator):
 				return
 			indicator.queue_free()
+			if not is_instance_valid(self) or _dead:
+				return
 			_do_colony_aoe(target, radius, dmg)
 		)
 	get_tree().create_timer(prep_time + 0.5, false).timeout.connect(func() -> void:
